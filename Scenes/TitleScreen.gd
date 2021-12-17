@@ -55,11 +55,9 @@ func _ready() -> void:
 	start_hint.hide()
 	
 	if GameProgression.global_win_state:
-		start_plus_button.disabled = false
 		start_plus_unlock_button_tooltip.hide()
 	else:
 		start_plus_button.disabled = true
-		start_plus_unlock_button_tooltip.show()
 
 	# Finally, fade in
 	ambient_audio.volume_db = -80
@@ -114,6 +112,7 @@ func _on_DoorArea_input_event(viewport: Node, event: InputEvent, shape_idx: int)
 	if event.is_action_released("MainAction"):
 		door_selected = true
 		start_container.show()
+		door_area_sprite.show()
 		
 		# Handle the hint
 		if is_instance_valid(start_hint_timer):
@@ -127,9 +126,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if door_selected:
 			door_selected = false
 			start_container.hide()
-			
-	if event.is_action_pressed("Test"):
-		print("Test")
+			door_area_sprite.hide()
 			
 			
 
@@ -175,8 +172,10 @@ func _on_StartPlus_mouse_entered() -> void:
 
 
 func _on_StartPlus_mouse_exited() -> void:
-	start_plus_button_tooltip.hide()
-	start_plus_unlock_button_tooltip.hide()
+	if GameProgression.global_win_state:
+		start_plus_button_tooltip.hide()
+	else:
+		start_plus_unlock_button_tooltip.hide()
 
 
 # Handle Start Buttons
@@ -201,9 +200,7 @@ func _start_game():
 
 func _on_CutsceneCameraAnimator_animation_finished(anim_name: String) -> void:
 	# Transition scene
-	if anim_name == "CameraZoomOnDoor":
-		camera_animator.play("SlowZoom")
-	GameControl.goto_scene("res://Scenes/Tutorial.tscn", 2.0)
+	GameControl.goto_scene("res://Scenes/Tutorial.tscn", 1.0)
 	
 func _disable_buttons():
 	start_button.disabled = true

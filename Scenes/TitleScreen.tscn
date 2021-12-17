@@ -153,7 +153,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.6, 0.6 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:position")
@@ -180,7 +180,7 @@ tracks/0/keys = {
 "times": PoolRealArray( -0.1, 1 ),
 "transitions": PoolRealArray( 2, 1 ),
 "update": 0,
-"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.4, 0.4 ) ]
+"values": [ Vector2( 0.6, 0.6 ), Vector2( 0.4, 0.4 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -371,9 +371,9 @@ texture = ExtResource( 5 )
 anims/blink = SubResource( 14 )
 
 [node name="CutsceneCamera" type="Camera2D" parent="."]
-position = Vector2( 699.831, 410.8 )
+position = Vector2( 640, 360 )
 current = true
-zoom = Vector2( 0.4, 0.4 )
+zoom = Vector2( 0.598347, 0.598347 )
 
 [node name="CutsceneCameraAnimator" type="AnimationPlayer" parent="CutsceneCamera"]
 anims/CameraZoomOnDoor = SubResource( 19 )
@@ -646,6 +646,7 @@ anims/FadeQuick = SubResource( 20 )
 anims/FadeOut = SubResource( 21 )
 
 [node name="StartHint" type="NinePatchRect" parent="UIElements"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 180.0
 margin_top = 320.0
 margin_right = 400.0
@@ -677,6 +678,7 @@ anims/Fade = SubResource( 23 )
 
 [node name="Ambient" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 24 )
+volume_db = -80.0
 bus = "SFX"
 
 [node name="AudioFade" type="AnimationPlayer" parent="Ambient"]

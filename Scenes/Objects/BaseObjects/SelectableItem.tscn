@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Objects/BaseObjects/SelectableItem.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 29.0176
+height = 60.9188
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 21.0
+height = 60.9188
+
+[node name="SelectableItem" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Base" type="Sprite" parent="."]
+centered = false
+
+[node name="OutlineAlert" type="Sprite" parent="."]
+modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
+centered = false
+
+[node name="OutlineAlertAnimation" type="AnimationPlayer" parent="OutlineAlert"]
+
+[node name="Placemat" type="Sprite" parent="."]
+modulate = Color( 0.372549, 0.72549, 0.129412, 0.533333 )
+centered = false
+
+[node name="DeliveryPlacemat" type="Sprite" parent="."]
+modulate = Color( 0.372549, 0.72549, 0.129412, 0.533333 )
+centered = false
+
+[node name="DeliveryPromptAnimation" type="AnimationPlayer" parent="DeliveryPlacemat"]
+
+[node name="DecaySprite" type="Sprite" parent="."]
+
+[node name="TiltSprite" type="Sprite" parent="."]
+
+[node name="DeliveryArea" type="Area2D" parent="."]
+position = Vector2( 277, 675 )
+
+[node name="DeliveryShape" type="CollisionShape2D" parent="DeliveryArea"]
+position = Vector2( 2, -84 )
+rotation = 1.69781
+shape = SubResource( 4 )
+
+[node name="SelectArea" type="Area2D" parent="."]
+position = Vector2( 277, 675 )
+
+[node name="SelectionShape" type="CollisionShape2D" parent="SelectArea"]
+position = Vector2( 2, 5 )
+rotation = 1.20274
+shape = SubResource( 3 )
+
+[node name="OutlineSelection" type="Sprite" parent="."]
+modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
+centered = false
+
+[node name="Cursor" type="Sprite" parent="."]
+z_index = 10
+
+[connection signal="input_event" from="DeliveryArea" to="." method="_on_SelectArea_input_event"]
+[connection signal="mouse_entered" from="DeliveryArea" to="." method="_on_SelectArea_mouse_entered"]
+[connection signal="mouse_exited" from="DeliveryArea" to="." method="_on_SelectArea_mouse_exited"]
+[connection signal="input_event" from="SelectArea" to="." method="_on_SelectArea_input_event"]
+[connection signal="mouse_entered" from="SelectArea" to="." method="_on_SelectArea_mouse_entered"]
+[connection signal="mouse_exited" from="SelectArea" to="." method="_on_SelectArea_mouse_exited"]

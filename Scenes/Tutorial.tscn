@@ -1,3 +1,486 @@
-[gd_scene format=2]
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Assets/Tutorial/TutorialSceneBase.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Tutorial/TutorialSceneWindowBacking.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Tutorial/FireplaceLight.png" type="Texture" id=3]
+[ext_resource path="res://Sounds/TitleWind.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Scenes/Objects/TutorialObjects/SelectableRock1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Tutorial.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Objects/TutorialObjects/SelectableRock2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Objects/TutorialObjects/SelectableLogs.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Tutorial/TutorialSceneKeyholeOutline.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/MenuTooltips.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Assets/UI/UI_NinePatch.png" type="Texture" id=11]
+[ext_resource path="res://Scenes/Objects/TutorialObjects/SelectableTutorialDoor.tscn" type="PackedScene" id=12]
+
+[sub_resource type="Animation" id=1]
+resource_name = "FlameFlicker"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1.1, 1.6, 1.9, 2.3, 2.7, 3.1, 3.3, 4.2, 4.4, 4.7 ),
+"transitions": PoolRealArray( 2.54912, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 461, 456 ), Vector2( 400, 600 ), Vector2( 450, 500 ), Vector2( 500, 490 ), Vector2( 461, 456 ), Vector2( 400, 400 ), Vector2( 350, 500 ), Vector2( 461, 456 ), Vector2( 461, 456 ), Vector2( 450, 400 ), Vector2( 500, 500 ), Vector2( 461, 456 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4, 1.3, 2.6, 3.4, 4.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.7, 0.9 ), Vector2( 0.4, 1 ), Vector2( 1.2, 0.8 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeIn"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "FadeOut"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -80.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 20.5, 32.5 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "BlinkState1"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.827451, 0.870588, 0.054902, 1 ), Color( 0.976471, 1, 0.541176, 1 ), Color( 0.827451, 0.870588, 0.054902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 3, 3, 0.3 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "BlinkState2"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.827451, 0.870588, 0.054902, 1 ), Color( 0.976471, 1, 0.541176, 1 ), Color( 0.827451, 0.870588, 0.054902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 3, 3, 0.3 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "BlinkState3"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.827451, 0.870588, 0.054902, 1 ), Color( 0.976471, 1, 0.541176, 1 ), Color( 0.827451, 0.870588, 0.054902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 3, 3, 0.3 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 2
+emission_box_extents = Vector3( 800, 60, 1 )
+flag_disable_z = true
+direction = Vector3( 0.5, 1, 0 )
+spread = 20.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 180.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 10.0
+tangential_accel_random = 1.0
+scale = 8.0
+scale_random = 1.0
+color = Color( 0.952941, 0.992157, 1, 1 )
+
+[sub_resource type="Animation" id=12]
+resource_name = "Fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Tooltip1/TooltipRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Tutorial" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="CabinInternal" type="Sprite" parent="."]
+light_mask = 512
+texture = ExtResource( 2 )
+centered = false
+
+[node name="FireplaceLight" type="Light2D" parent="."]
+light_mask = 513
+position = Vector2( 374.861, 490.145 )
+scale = Vector2( 0.58959, 0.952603 )
+texture = ExtResource( 3 )
+color = Color( 0.901961, 0.482353, 0.172549, 1 )
+range_layer_max = 11
+range_item_cull_mask = 512
+
+[node name="FirelightRandomness" type="AnimationPlayer" parent="FireplaceLight"]
+anims/FlameFlicker = SubResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+light_mask = 2
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="AudioFade" type="AnimationPlayer" parent="Ambient"]
+anims/FadeIn = SubResource( 3 )
+anims/FadeOut = SubResource( 6 )
+
+[node name="GameObjects" type="Node2D" parent="."]
+
+[node name="SelectableRock1" parent="GameObjects" instance=ExtResource( 5 )]
+
+[node name="SelectableRock2" parent="GameObjects" instance=ExtResource( 7 )]
+
+[node name="SelectableLogs" parent="GameObjects" instance=ExtResource( 8 )]
+
+[node name="SelectableKeyHole" type="Node2D" parent="GameObjects"]
+
+[node name="KeyHole" type="Area2D" parent="GameObjects/SelectableKeyHole"]
+position = Vector2( 616, 358 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameObjects/SelectableKeyHole/KeyHole"]
+position = Vector2( -0.5, 2.5 )
+shape = SubResource( 7 )
+
+[node name="KeyHoleMarker" type="Sprite" parent="GameObjects/SelectableKeyHole/KeyHole"]
+modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
+position = Vector2( 0, 4 )
+texture = ExtResource( 9 )
+
+[node name="KeyHoleMarkerAnimator" type="AnimationPlayer" parent="GameObjects/SelectableKeyHole/KeyHole/KeyHoleMarker"]
+anims/BlinkState1 = SubResource( 9 )
+anims/BlinkState2 = SubResource( 8 )
+anims/BlinkState3 = SubResource( 10 )
+
+[node name="SelectableTutorialDoor" parent="GameObjects" instance=ExtResource( 12 )]
+
+[node name="SnowForeground" type="Particles2D" parent="."]
+position = Vector2( 500, -20 )
+amount = 700
+lifetime = 10.0
+preprocess = 20.0
+visibility_rect = Rect2( -100, -100, 1200, 800 )
+process_material = SubResource( 2 )
+
+[node name="Tooltips" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipAnimator" type="AnimationPlayer" parent="Tooltips"]
+anims/Fade = SubResource( 12 )
+
+[node name="Tooltip1" type="MarginContainer" parent="Tooltips"]
+margin_left = 653.0
+margin_top = 59.0
+margin_right = 1271.0
+margin_bottom = 142.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipRect" type="NinePatchRect" parent="Tooltips/Tooltip1"]
+margin_right = 618.0
+margin_bottom = 83.0
+texture = ExtResource( 11 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Tooltips/Tooltip1"]
+margin_right = 618.0
+margin_bottom = 83.0
+
+[node name="TooltipLabel" type="Label" parent="Tooltips/Tooltip1/CenterContainer"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 603.0
+margin_bottom = 73.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "Objects that can be selected have a yellow outline when 
+you mouse over them. Some items can even be picked up by clicking."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip2" type="MarginContainer" parent="Tooltips"]
+margin_left = 703.0
+margin_top = 352.0
+margin_right = 1041.0
+margin_bottom = 435.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipRect" type="NinePatchRect" parent="Tooltips/Tooltip2"]
+margin_right = 338.0
+margin_bottom = 83.0
+texture = ExtResource( 11 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Tooltips/Tooltip2"]
+margin_right = 338.0
+margin_bottom = 83.0
+
+[node name="TooltipLabel" type="Label" parent="Tooltips/Tooltip2/CenterContainer"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 323.0
+margin_bottom = 73.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "If something needs attention, it will 
+pulse with an exclaimation point."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip3" type="MarginContainer" parent="Tooltips"]
+margin_left = 56.0
+margin_top = 172.0
+margin_right = 456.0
+margin_bottom = 321.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipRect" type="NinePatchRect" parent="Tooltips/Tooltip3"]
+margin_right = 400.0
+margin_bottom = 149.0
+texture = ExtResource( 11 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Tooltips/Tooltip3"]
+margin_right = 400.0
+margin_bottom = 149.0
+
+[node name="TooltipLabel" type="Label" parent="Tooltips/Tooltip3/CenterContainer"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 385.0
+margin_bottom = 139.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "Objects can be put back in their place by 
+left-clicking on their place, or right-clicking 
+anywhere if you are where it came from. 
+(You can change this in settings)"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip4" type="MarginContainer" parent="Tooltips"]
+margin_left = 16.0
+margin_top = 478.0
+margin_right = 422.0
+margin_bottom = 561.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipRect" type="NinePatchRect" parent="Tooltips/Tooltip4"]
+margin_right = 406.0
+margin_bottom = 83.0
+texture = ExtResource( 11 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Tooltips/Tooltip4"]
+margin_right = 406.0
+margin_bottom = 83.0
+
+[node name="TooltipLabel" type="Label" parent="Tooltips/Tooltip4/CenterContainer"]
+margin_left = 26.0
+margin_top = 10.0
+margin_right = 379.0
+margin_bottom = 73.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "Some objects cannot be selected until a 
+condition is met. Keep exploring the area!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip5" type="MarginContainer" parent="Tooltips"]
+margin_left = 703.0
+margin_top = 271.0
+margin_right = 1244.0
+margin_bottom = 387.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipRect" type="NinePatchRect" parent="Tooltips/Tooltip5"]
+margin_right = 541.0
+margin_bottom = 116.0
+texture = ExtResource( 11 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Tooltips/Tooltip5"]
+margin_right = 541.0
+margin_bottom = 116.0
+
+[node name="TooltipLabel" type="Label" parent="Tooltips/Tooltip5/CenterContainer"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 526.0
+margin_bottom = 106.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "Some objects will decay that need attention will pulse with
+greater speed and exclaimation points. Don't worry though;
+this object won't break, but some objects inside will!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

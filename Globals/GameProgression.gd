@@ -23,7 +23,7 @@ func _ready() -> void:
 	
 	# Game construction
 	plus_mode = false
-	global_win_state = false
+	global_win_state = true
 	
 
 func main_timeout():
