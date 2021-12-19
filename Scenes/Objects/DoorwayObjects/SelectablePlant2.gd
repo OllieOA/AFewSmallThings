@@ -3,6 +3,7 @@ extends SelectableItem
 onready var flies_animated_sprite = $FliesSprite
 
 func _ready() -> void:
+	desired_item = "SelectableWateringCan"
 	my_object_name = str(self.get_name())
 	wall_location = "Doorway"
 	decay_texture_1 = load("res://Assets/Doorway/DoorwayRoom_Plant2_DecayState1.png")
@@ -15,7 +16,6 @@ func _ready() -> void:
 	selectable = false
 	decayable = true
 	alertable = true
-	base_random_chance = 100
 	
 	# Plant can be killed
 	flies_animated_sprite.hide()

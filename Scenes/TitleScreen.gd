@@ -7,13 +7,6 @@ onready var door_area_marker_animation = $DoorArea/MarkerSprite/DoorMarkerAnimat
 var door_selected
 
 # Collect buttons and tooltips
-onready var settings_button = $UIElements/SettingsInfo/HorizContainer/SettingsButton
-onready var settings_button_tooltip = $UIElements/SettingsInfo/HorizContainer/SettingsButton/SettingsLabelBase
-onready var info_button = $UIElements/SettingsInfo/HorizContainer/InfoButton
-onready var info_button_tooltip = $UIElements/SettingsInfo/HorizContainer/InfoButton/InfoLabelBase
-onready var help_button = $UIElements/SettingsInfo/HorizContainer/HelpButton
-onready var help_button_tooltip = $UIElements/SettingsInfo/HorizContainer/HelpButton/HelpLabelBase
-
 onready var start_container = $UIElements/StartGame/StartContainer
 onready var start_button = $UIElements/StartGame/StartContainer/Start
 onready var start_button_tooltip =$UIElements/StartGame/StartContainer/Start/StartLabelBase
@@ -28,15 +21,17 @@ var start_hint_timer
 onready var screen_fade = $UIElements/ScreenFade/ScreenFadeAnimator
 onready var ambient_audio = $Ambient
 onready var ambient_audio_fade = $Ambient/AudioFade
-onready var music_fade = $Music/AudioFade
-onready var music_audio = $Music
 onready var ui_elements_fade = $UIElements/ButtonAndTitleFade
 
 # Get camera
 onready var camera_node = $CutsceneCamera
 onready var camera_animator = $CutsceneCamera/CutsceneCameraAnimator
 
+# Audio
+onready var click_sound = $UIElements/ClickSound
+
 func _ready() -> void:
+	GameControl.current_scene_name = "TitleScreen"
 	camera_node.position.x = 640.0
 	camera_node.position.y = 360.0
 	camera_node.zoom.x = 1.0
@@ -45,9 +40,6 @@ func _ready() -> void:
 	door_selected = false
 	
 	# Hide everything needed
-	settings_button_tooltip.hide()
-	info_button_tooltip.hide()
-	help_button_tooltip.hide()
 	start_button_tooltip.hide()
 	start_plus_button_tooltip.hide()
 	start_container.hide()
@@ -85,8 +77,8 @@ func _ready() -> void:
 
 
 func _music_fade_timeout() -> void:
-	music_fade.play("FadeIn")
-	music_audio.play()
+	GameControl.music_fade.play("FadeIn")
+	GameControl.music_audio.play()
 
 func _start_hint_timeout() -> void:
 	start_hint.modulate.a = 0
@@ -109,7 +101,9 @@ func _on_DoorArea_mouse_exited() -> void:
 	
 
 func _on_DoorArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event.is_action_released("MainAction"):
+	
+	if event.is_action_pressed(GameControl.main_input_name):
+		click_sound.play()
 		door_selected = true
 		start_container.show()
 		door_area_sprite.show()
@@ -122,7 +116,7 @@ func _on_DoorArea_input_event(viewport: Node, event: InputEvent, shape_idx: int)
 				start_hint_animator.play_backwards()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_released("CancelAction"):
+	if event.is_action_released(GameControl.cancel_input_name):
 		if door_selected:
 			door_selected = false
 			start_container.hide()
@@ -131,31 +125,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 
 # Tooltips
-
-func _on_InfoButton_mouse_entered() -> void:
-	info_button_tooltip.show()
-
-
-func _on_InfoButton_mouse_exited() -> void:
-	info_button_tooltip.hide()
-
-
-func _on_HelpButton_mouse_entered() -> void:
-	help_button_tooltip.show()
-
-
-func _on_HelpButton_mouse_exited() -> void:
-	help_button_tooltip.hide()
-
-
-func _on_SettingsButton_mouse_entered() -> void:
-	settings_button_tooltip.show()
-
-
-func _on_SettingsButton_mouse_exited() -> void:
-	settings_button_tooltip.hide()
-
-
 func _on_Start_mouse_entered() -> void:
 	start_button_tooltip.show()
 
@@ -195,23 +164,23 @@ func _start_game():
 	door_area_sprite.hide()
 	camera_animator.play("CameraZoomOnDoor")
 	ui_elements_fade.play("FadeOut")
-	music_fade.play("FadeOut")
 	
 
 func _on_CutsceneCameraAnimator_animation_finished(anim_name: String) -> void:
 	# Transition scene
 	GameControl.goto_scene("res://Scenes/Tutorial.tscn", 1.0)
-	
+
+
 func _disable_buttons():
 	start_button.hide()
 	start_plus_button.hide()
 	start_button.disabled = true
 	start_plus_button.disabled = true
-	settings_button.disabled = true
-	info_button.disabled = true
-	help_button.disabled = true
-
 
 
 func _on_ScreenFadeAnimator_animation_finished(anim_name: String) -> void:
 	screen_fade.queue_free()
+
+
+func _on_Start_button_down() -> void:
+	click_sound.play()

@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Globals/GameControl.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Objects/UIObjects/Settings.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Music/AFST_Title.ogg" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
@@ -15,6 +17,36 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, -8.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeOut"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -8.0, -80.0 ]
 }
 
 [node name="GameControl" type="Node2D"]
@@ -32,7 +64,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SettingsInfo" parent="CanvasLayer" instance=ExtResource( 2 )]
+margin_left = 890.0
+margin_right = 962.0
+
+[node name="Cursor" type="Sprite" parent="CanvasLayer"]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fade = SubResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 3 )
+volume_db = -80.0
+bus = "Music"
+
+[node name="AudioFade" type="AnimationPlayer" parent="Music"]
+anims/FadeIn = SubResource( 2 )
+anims/FadeOut = SubResource( 3 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

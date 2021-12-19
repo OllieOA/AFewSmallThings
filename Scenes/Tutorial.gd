@@ -39,8 +39,6 @@ onready var text_animator = $TextPrompts/TextAnimator
 onready var text_audio = $TextPrompts/AudioText
 
 # UI Elements
-export (NodePath) onready var settings_button = get_node(settings_button) as TextureButton
-export (NodePath) onready var settings_button_tooltip = get_node(settings_button_tooltip) as NinePatchRect
 onready var alert_level_1 = $AlertLevel1Notification 
 onready var alert_level_2 = $AlertLevel2Notification 
 
@@ -91,8 +89,6 @@ func _ready() -> void:
 	text_1.modulate.a = 0
 	text_2.modulate.a = 0
 	
-	# UI elements
-	settings_button_tooltip.hide()
 	
 	# Start initial dialogue
 	# emit signal when done, show tooltip
@@ -104,7 +100,7 @@ func _ready() -> void:
 func _on_KeyHole_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	# Hacky logic, but that is fine as this isn't really used much
 	if logs.extracted:
-		if event.is_action_pressed("MainAction"):
+		if event.is_action_pressed(GameControl.main_input_name):
 			keyhole_marker_sprite.hide()
 			keyhole_alert_sprite.hide()
 			keyhole_selectable = false
@@ -156,6 +152,7 @@ func _door_knocked_on():
 		_set_animation_and_play_text(text_1)
 		yield(text_animator, "animation_finished")
 	else:
+		GameControl.music_fade.play("FadeOut")
 		door.selectable = false
 		door.outline_selection_sprite.hide()
 		door.select_audio.stream = door_open_sound
@@ -217,16 +214,6 @@ func _unlock_door():
 	yield(tooltip_animator, "animation_finished")
 	door.selectable = true
 	
-
-# UI Elements
-
-func _on_SettingsButton_mouse_entered() -> void:
-	settings_button_tooltip.show()
-
-
-func _on_SettingsButton_mouse_exited() -> void:
-	settings_button_tooltip.hide()
-
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action_pressed("Skip"):

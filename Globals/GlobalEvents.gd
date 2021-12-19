@@ -3,6 +3,10 @@ extends Node2D
 onready var wind_audio = $Wind
 onready var wind_audio_fade = $Wind/AudioFade
 
+onready var door_noise = $DoorNoise
+onready var window_noise = $WindowNoise
+onready var fire_noise = $FireplaceAmbient
+
 var start_wind
 var start_wind_latch
 var end_wind
@@ -34,4 +38,15 @@ func _process(delta: float) -> void:
 		wind_audio.stream_paused = true
 		yield(wind_audio_fade, "animation_finished")
 		start_wind_latch = false
+		
+
+func play_event_audio(object_type):
+	if object_type == "Door":
+		door_noise.play()
+	elif object_type == "Window":
+		window_noise.play()
+		
+
+func play_fireplace():
+	fire_noise.play()
 		

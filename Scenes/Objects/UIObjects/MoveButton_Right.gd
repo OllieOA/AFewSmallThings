@@ -1,9 +1,10 @@
 extends MoveButton
 
 func _ready() -> void:
+	my_direction = "Right"
 	outline_alert_level1_texture = load("res://Assets/UI/UIMovement_Right_Alert1.png")
 	outline_alert_level2_texture = load("res://Assets/UI/UIMovement_Right_Alert2.png")
-	self.connect("object_selected", self, "_move_select", ["Right"])
+	self.connect("object_selected", self, "_move_select", [my_direction])
 
 
 func _move_select(direction):

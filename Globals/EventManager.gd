@@ -1,11 +1,11 @@
 extends Node
 
-
 signal random_change
 
 var main_timer
 var object_dict
 var rng = RandomNumberGenerator.new()
+var events_started
 
 onready var alert_notifier_1 = $AlertLevel1
 onready var alert_notifier_2 = $AlertLevel2
@@ -14,6 +14,8 @@ onready var kill_sound = $KillSound
 var room_alert_levels
 
 func _ready() -> void:
+	events_started = false
+	GameControl.game_started = false
 	object_dict = {}
 	room_alert_levels = {
 		"Doorway": 3,
@@ -23,16 +25,21 @@ func _ready() -> void:
 		}
 	rng.randomize()
 	
+
+func _process(delta: float) -> void:
+	_determine_room_levels()
+	if GameControl.game_started and not events_started:
+		events_started = true
+		_start_events()
+	
+	
+func _start_events():
 	main_timer = Timer.new()
 	add_child(main_timer)
 	main_timer.autostart = true
 	main_timer.wait_time = GameProgression.game_speed
 	main_timer.connect("timeout", self, "main_timeout")
 	main_timer.start()
-	
-
-func _process(delta: float) -> void:
-	_determine_room_levels()
 
 
 func add_object(object, alert_level, wall_location, base_random_chance, object_decayable, object_tiltable, object_fallable, object_position):
@@ -51,18 +58,21 @@ func add_object(object, alert_level, wall_location, base_random_chance, object_d
 
 
 func main_timeout():
-	print("DEBUG: CURRENT GLOBAL DICT ", object_dict)
+	print(GameControl.cursor_inventory)
+#	print("DEBUG: CURRENT GLOBAL DICT ", room_alert_levels)
+#	print("DEBUG: CURRENT GLOBAL DICT ", object_dict)
 	var curr_rand = rng.randi_range(0, 100)
 	var random_event = false
 
 	# Get current keys in random order
 	var object_list = object_dict.keys()
+	object_list.shuffle()
 
 	while not random_event:
 		if len(object_list) == 0:
 			break
 		
-		var object_name_to_check = object_list.pop_at(randi() % object_list.size())
+		var object_name_to_check = object_list.pop_at(0)
 		var object_active = (
 			object_dict[object_name_to_check]["object_tiltable"] or
 			object_dict[object_name_to_check]["object_decayable"] or
@@ -75,7 +85,11 @@ func main_timeout():
 #				print("DEBUG: RANDOMISING")
 				object_dict[object_name_to_check]["random_chance"] = object_dict[object_name_to_check]["base_random_chance"]
 				random_event = true
-				object_dict[object_name_to_check]["alert_level"] -= 1
+				if object_dict[object_name_to_check]["object_decayable"]:
+					object_dict[object_name_to_check]["alert_level"] -= 1
+				else:
+					if object_dict[object_name_to_check]["alert_level"] == 3:
+						object_dict[object_name_to_check]["alert_level"] = 2
 				object_dict[object_name_to_check]["object_alertable"] = false
 				emit_signal("random_change", object_name_to_check)
 				if GameControl.current_scene_name == object_dict[object_name_to_check]["wall_location"]:
@@ -120,7 +134,7 @@ func play_notification_level(level, position_to_set):
 
 func alert_cooldown_start(object_name):
 	var alert_cooldown = Timer.new()
-	print("DEBUG: COOLDOWN STARTED FOR ", object_name, " USING TIMER ", str(alert_cooldown))
+#	print("DEBUG: COOLDOWN STARTED FOR ", object_name, " USING TIMER ", str(alert_cooldown))
 	add_child(alert_cooldown)
 	alert_cooldown.one_shot = true
 	alert_cooldown.wait_time = 5.0
@@ -129,7 +143,7 @@ func alert_cooldown_start(object_name):
 
 
 func _alert_cooldown_timeout(object_name):
-	print("DEBUG: COOLDOWN ENDED FOR ", object_name)
+#	print("DEBUG: COOLDOWN ENDED FOR ", object_name)
 	object_dict[object_name]["object_alertable"] = true
 
 
@@ -137,6 +151,6 @@ func _determine_room_levels():
 	for room_name in room_alert_levels.keys():
 		var curr_alert_level = 3
 		for object_parameters in object_dict.values():
-			if object_parameters["wall_location"] == room_name and object_parameters["alert_level"] in range(1, 2):
+			if object_parameters["wall_location"] == room_name and object_parameters["alert_level"] in range(1, 3):
 				curr_alert_level = min(curr_alert_level, object_parameters["alert_level"])
 		room_alert_levels[room_name] = curr_alert_level

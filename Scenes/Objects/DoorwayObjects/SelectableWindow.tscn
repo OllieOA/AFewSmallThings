@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectableDoor.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Window_Base1.png" type="Texture" id=2]
@@ -14,6 +14,63 @@ height = 60.9188
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 100.25, 124.25 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "BlinkState1"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.815686, 0.121569, 0.121569, 1 ), Color( 1, 0.407843, 0.407843, 1 ), Color( 0.815686, 0.121569, 0.121569, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 3, 3, 0.3 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "BlinkState2"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.870588, 0.588235, 0.054902, 1 ), Color( 1, 0.8, 0.419608, 1 ), Color( 0.870588, 0.588235, 0.054902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 3, 3, 0.3 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
 
 [node name="SelectableWindow" type="Node2D"]
 script = ExtResource( 1 )
@@ -54,11 +111,13 @@ position = Vector2( -224.25, -208.25 )
 shape = SubResource( 5 )
 
 [node name="OutlineAlert" type="Sprite" parent="."]
-modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
+modulate = Color( 0.815686, 0.121569, 0.121569, 1 )
+position = Vector2( 130, 144 )
 texture = ExtResource( 5 )
-centered = false
 
 [node name="OutlineAlertAnimation" type="AnimationPlayer" parent="OutlineAlert"]
+anims/BlinkState1 = SubResource( 6 )
+anims/BlinkState2 = SubResource( 7 )
 
 [node name="OutlineSelection" type="Sprite" parent="."]
 modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
@@ -71,10 +130,12 @@ z_index = 10
 [node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 max_distance = 3000.0
+bus = "SFX"
 
 [node name="DropSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 max_distance = 3000.0
+bus = "SFX"
 
 [connection signal="input_event" from="DeliveryArea" to="." method="_on_SelectArea_input_event"]
 [connection signal="mouse_entered" from="DeliveryArea" to="." method="_on_SelectArea_mouse_entered"]

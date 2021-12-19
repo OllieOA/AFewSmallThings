@@ -148,7 +148,7 @@ centered = false
 [node name="FliesSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 77, 44 )
 frames = SubResource( 9 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="Cursor" type="Sprite" parent="."]
@@ -156,9 +156,11 @@ z_index = 10
 
 [node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
 max_distance = 3000.0
+bus = "SFX"
 
 [node name="DropSound" type="AudioStreamPlayer2D" parent="."]
 max_distance = 3000.0
+bus = "SFX"
 
 [connection signal="input_event" from="DeliveryArea" to="." method="_on_SelectArea_input_event"]
 [connection signal="mouse_entered" from="DeliveryArea" to="." method="_on_SelectArea_mouse_entered"]

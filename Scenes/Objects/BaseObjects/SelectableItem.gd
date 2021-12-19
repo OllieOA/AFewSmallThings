@@ -34,6 +34,7 @@ var extracted : bool
 var fallable : bool
 var fallen : bool
 var decayable : bool
+var desired_item
 var dead_latch : bool
 var num_decay_states : int
 var tiltable : bool
@@ -76,6 +77,7 @@ onready var delivery_area = $DeliveryArea
 
 
 func _ready() -> void:
+	desired_item = "Nothing"
 	# Set up default logic
 	selectable = false
 	pickable = false
@@ -113,6 +115,9 @@ func _ready() -> void:
 	# Set up audio
 	select_audio.position = selection_area.position
 	drop_audio.position = selection_area.position
+	
+	# Randomness
+	base_random_chance = 100
 
 
 func _process(delta: float) -> void:
@@ -121,7 +126,7 @@ func _process(delta: float) -> void:
 
 
 func process_alert(level, object_name):
-	print("PROCESSING ALERT")
+#	print("PROCESSING ALERT")
 	if decayable:
 		if level == 2:
 			_decay(level, object_name)
@@ -136,12 +141,12 @@ func process_alert(level, object_name):
 			_kill_object()
 			if GameControl.current_scene_name == wall_location:
 				EventManager.play_notification_level(0, audio_position_location)
-	elif tiltable:
+	elif tiltable and not tilted:
 		if level <= 2:
-			_tilt(2)
-			
-			
-		
+			_tilt(2, object_name)
+			if GameControl.current_scene_name == wall_location:
+				EventManager.play_notification_level(2, audio_position_location)
+
 	elif fallable:
 		pass
 
@@ -169,32 +174,35 @@ func _on_SelectArea_mouse_exited() -> void:
 # Handle inventory
 func _on_SelectArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if selectable:
-		if event.is_action_pressed("MainAction"):
+		if event.is_action_pressed(GameControl.main_input_name):
 			if pickable and GameControl.cursor_inventory == null:
 				_pickup()
 			elif picked and GameControl.cursor_inventory == self.get_name():
 				_drop()
 			elif extractable and GameControl.cursor_inventory == null:
 				_extract()
-			elif tilted:
+			elif GameControl.cursor_inventory == desired_item:
+				_undecay()
+			elif tilted and GameControl.cursor_inventory == null:
 				_untilt()
-			elif GameControl.cursor_inventory == null:
+			elif GameControl.cursor_inventory == null or (not pickable and GameControl.cursor_inventory != null):
 				_select()
 	elif not selectable and picked and GameControl.cursor_inventory == self.get_name():
-		if event.is_action_pressed("MainAction"):
+		if event.is_action_pressed(GameControl.main_input_name):
 			_drop()
-		
+
 
 func _unhandled_input(event: InputEvent) -> void:	
 	if picked and GameControl.cursor_inventory != null:
-		if event.is_action_released("CancelAction") and dropable:
+		if event.is_action_released(GameControl.cancel_input_name) and dropable:
 			_drop()
 	
 	
 # Manipulation methods
 func _pickup():
 	# Handle logic
-	GameControl.cursor_inventory = self.get_name()
+	GameControl.cursor_inventory = str(self.get_name())
+	GameControl.update_cursor_texture(base_sprite.texture)
 	picked = true
 	pickable = false
 	
@@ -208,9 +216,6 @@ func _pickup():
 	outline_alert_sprite.hide()
 	placemat_sprite.show()
 	
-	# Manage cursor
-	cursor_sprite.show()
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	emit_signal("object_picked")
 	
 	
@@ -234,6 +239,7 @@ func _extract():
 func _drop():
 	# Handle logic
 	GameControl.cursor_inventory = null
+	GameControl.update_cursor_texture(null)
 	picked = false
 	pickable = true
 	
@@ -247,7 +253,7 @@ func _drop():
 	
 	# Manage cursor
 	cursor_sprite.hide()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+#	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	emit_signal("object_dropped")
 
 
@@ -270,19 +276,25 @@ func _select():
 #	emit_signal("object_tilted")
 
 
-func _tilt(level):
+func _tilt(level, object_name):
 	selectable = true
+	tilted = true
 	base_sprite.hide()
 	tilt_sprite.show()
 	outline_alert_sprite.show()
-	alert_animator.play("BlinkState1")	
+	alert_animator.play("BlinkState2")
+	EventManager.alert_cooldown_start(object_name)
+	emit_signal("object_tilted")
 	
 	
 func _untilt():
 	selectable = false
 	tilted = false
+	outline_alert_sprite.hide()
 	base_sprite.show()
 	tilt_sprite.hide()
+	outline_selection_sprite.hide()
+	_remove_alert()
 	if select_audio.get_stream() != null:
 		select_audio.play()
 	emit_signal("object_untilted")
@@ -301,6 +313,7 @@ func _decay(level, object_name):
 	decay_sprite.show()
 	base_sprite.hide()
 	outline_alert_sprite.show()
+	outline_selection_sprite.hide()
 	EventManager.alert_cooldown_start(object_name)
 	emit_signal("object_decayed")
 
@@ -320,8 +333,8 @@ func fall():
 func _remove_alert():
 	alert_level = 3
 	outline_alert_sprite.hide()
-	EventManager.object_dict[self]["alert_level"] = 3
-	EventManager.object_dict[self]["alertable"] = false
+	EventManager.object_dict[my_object_name]["alert_level"] = 3
+	EventManager.object_dict[my_object_name]["alertable"] = false
 	EventManager.alert_cooldown_start(my_object_name)
 	
 

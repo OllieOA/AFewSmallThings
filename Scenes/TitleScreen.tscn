@@ -1,20 +1,12 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Assets/Title/TitleBackground_background.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Title/TitleBackground_text.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Title/TitleBackground_foreground.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/TitleScreen.gd" type="Script" id=4]
 [ext_resource path="res://Assets/UI/TitleDoorMarker.png" type="Texture" id=5]
-[ext_resource path="res://Assets/UI/TitleMenu_SettingsBase.png" type="Texture" id=6]
-[ext_resource path="res://Assets/UI/TitleMenu_SettingsClick.png" type="Texture" id=7]
-[ext_resource path="res://Assets/UI/TitleMenu_SettingsMouseover.png" type="Texture" id=8]
-[ext_resource path="res://Assets/UI/TitleMenu_InfoBase.png" type="Texture" id=9]
+[ext_resource path="res://Sounds/UIClick-03.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Assets/UI/UI_NinePatch.png" type="Texture" id=10]
-[ext_resource path="res://Assets/UI/TitleMenu_InfoMouseover.png" type="Texture" id=11]
-[ext_resource path="res://Assets/UI/TitleMenu_InfoClick.png" type="Texture" id=12]
-[ext_resource path="res://Assets/UI/TitleMenu_HelpBase.png" type="Texture" id=13]
-[ext_resource path="res://Assets/UI/TitleMenu_HelpClick.png" type="Texture" id=14]
-[ext_resource path="res://Assets/UI/TitleMenu_HelpMouseover.png" type="Texture" id=15]
 [ext_resource path="res://Assets/UI/TitleMenu_StartMouseover.png" type="Texture" id=16]
 [ext_resource path="res://Assets/UI/TitleMenu_StartClick.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/TitleMenu_StartBase.png" type="Texture" id=18]
@@ -24,7 +16,6 @@
 [ext_resource path="res://Assets/UI/TitleMenu_StartPMouseover.png" type="Texture" id=22]
 [ext_resource path="res://Fonts/MenuTooltips.tres" type="DynamicFont" id=23]
 [ext_resource path="res://Sounds/TitleWind.ogg" type="AudioStream" id=24]
-[ext_resource path="res://Music/AFST_Title.ogg" type="AudioStream" id=25]
 
 [sub_resource type="ParticlesMaterial" id=12]
 emission_shape = 2
@@ -217,7 +208,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=21]
 resource_name = "FadeOut"
 tracks/0/type = "value"
-tracks/0/path = NodePath("SettingsInfo:modulate")
+tracks/0/path = NodePath("../TitleText:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -229,24 +220,12 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../TitleText:modulate")
+tracks/1/path = NodePath("StartGame:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("StartGame:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
@@ -285,46 +264,17 @@ tracks/0/keys = {
 "values": [ -80.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=17]
-resource_name = "FadeIn"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Music:volume_db")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ -80.0, -8.0 ]
-}
-
-[sub_resource type="Animation" id=18]
-resource_name = "FadeOut"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Music:volume_db")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( -0.1, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ -8.0, -80.0 ]
-}
-
 [node name="TitleScreen" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 4 )
 
 [node name="TitleBackground" type="Sprite" parent="."]
+pause_mode = 2
 texture = ExtResource( 1 )
 centered = false
 
 [node name="SnowBackground" type="Particles2D" parent="."]
+pause_mode = 2
 position = Vector2( 600, -20 )
 amount = 500
 lifetime = 15.0
@@ -333,12 +283,14 @@ visibility_rect = Rect2( -100, -100, 1200, 800 )
 process_material = SubResource( 12 )
 
 [node name="TitleForeground" type="AnimatedSprite" parent="."]
+pause_mode = 2
 frames = SubResource( 9 )
-frame = 1
+frame = 2
 playing = true
 centered = false
 
 [node name="SnowMidground" type="Particles2D" parent="."]
+pause_mode = 2
 position = Vector2( 500, -20 )
 amount = 600
 lifetime = 10.0
@@ -347,10 +299,12 @@ visibility_rect = Rect2( -100, -100, 1200, 800 )
 process_material = SubResource( 10 )
 
 [node name="TitleText" type="Sprite" parent="."]
+pause_mode = 2
 texture = ExtResource( 2 )
 centered = false
 
 [node name="SnowForeground" type="Particles2D" parent="."]
+pause_mode = 2
 position = Vector2( 500, -20 )
 amount = 700
 lifetime = 10.0
@@ -359,159 +313,43 @@ visibility_rect = Rect2( -100, -100, 1200, 800 )
 process_material = SubResource( 11 )
 
 [node name="DoorArea" type="Area2D" parent="."]
+pause_mode = 2
 position = Vector2( 746, 532 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorArea"]
+pause_mode = 2
 shape = SubResource( 13 )
 
 [node name="MarkerSprite" type="Sprite" parent="DoorArea"]
+pause_mode = 2
 modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
 texture = ExtResource( 5 )
 
 [node name="DoorMarkerAnimator" type="AnimationPlayer" parent="DoorArea/MarkerSprite"]
+pause_mode = 2
 anims/blink = SubResource( 14 )
 
 [node name="CutsceneCamera" type="Camera2D" parent="."]
+pause_mode = 2
 position = Vector2( 640, 360 )
 current = true
 zoom = Vector2( 0.598347, 0.598347 )
 
 [node name="CutsceneCameraAnimator" type="AnimationPlayer" parent="CutsceneCamera"]
+pause_mode = 2
 anims/CameraZoomOnDoor = SubResource( 19 )
 anims/SlowZoom = SubResource( 22 )
 
 [node name="UIElements" type="Control" parent="."]
+pause_mode = 2
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SettingsInfo" type="MarginContainer" parent="UIElements"]
-anchor_top = 0.5
-anchor_right = 31.5
-anchor_bottom = 1.0
-margin_left = 900.0
-margin_bottom = 78.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HorizContainer" type="HBoxContainer" parent="UIElements/SettingsInfo"]
-margin_right = 360.0
-margin_bottom = 98.0
-custom_constants/separation = 24
-alignment = 2
-
-[node name="InfoButton" type="TextureButton" parent="UIElements/SettingsInfo/HorizContainer"]
-margin_left = 96.0
-margin_right = 168.0
-margin_bottom = 98.0
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 12 )
-texture_hover = ExtResource( 11 )
-
-[node name="InfoLabelBase" type="NinePatchRect" parent="UIElements/SettingsInfo/HorizContainer/InfoButton"]
-margin_left = -20.0
-margin_top = 80.0
-margin_right = 70.0
-margin_bottom = 118.0
-texture = ExtResource( 10 )
-region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
-patch_margin_left = 6
-patch_margin_top = 3
-patch_margin_right = 6
-patch_margin_bottom = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InfoLabel" type="Label" parent="UIElements/SettingsInfo/HorizContainer/InfoButton/InfoLabelBase"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
-custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
-custom_fonts/font = ExtResource( 23 )
-text = "Credits"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HelpButton" type="TextureButton" parent="UIElements/SettingsInfo/HorizContainer"]
-margin_left = 192.0
-margin_right = 264.0
-margin_bottom = 98.0
-texture_normal = ExtResource( 13 )
-texture_pressed = ExtResource( 14 )
-texture_hover = ExtResource( 15 )
-
-[node name="HelpLabelBase" type="NinePatchRect" parent="UIElements/SettingsInfo/HorizContainer/HelpButton"]
-margin_left = -20.0
-margin_top = 80.0
-margin_right = 70.0
-margin_bottom = 118.0
-texture = ExtResource( 10 )
-region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
-patch_margin_left = 6
-patch_margin_top = 3
-patch_margin_right = 6
-patch_margin_bottom = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HelpLabel" type="Label" parent="UIElements/SettingsInfo/HorizContainer/HelpButton/HelpLabelBase"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
-custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
-custom_fonts/font = ExtResource( 23 )
-text = "Help"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SettingsButton" type="TextureButton" parent="UIElements/SettingsInfo/HorizContainer"]
-margin_left = 288.0
-margin_right = 360.0
-margin_bottom = 98.0
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 7 )
-texture_hover = ExtResource( 8 )
-
-[node name="SettingsLabelBase" type="NinePatchRect" parent="UIElements/SettingsInfo/HorizContainer/SettingsButton"]
-margin_left = -20.0
-margin_top = 80.0
-margin_right = 70.0
-margin_bottom = 118.0
-texture = ExtResource( 10 )
-region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
-patch_margin_left = 6
-patch_margin_top = 3
-patch_margin_right = 6
-patch_margin_bottom = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SettingsLabel" type="Label" parent="UIElements/SettingsInfo/HorizContainer/SettingsButton/SettingsLabelBase"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
-custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
-custom_fonts/font = ExtResource( 23 )
-text = "Settings"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="StartGame" type="MarginContainer" parent="UIElements"]
+pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -525,11 +363,13 @@ __meta__ = {
 }
 
 [node name="StartContainer" type="HBoxContainer" parent="UIElements/StartGame"]
+pause_mode = 2
 margin_right = 535.0
 margin_bottom = 78.0
 custom_constants/separation = 25
 
 [node name="Start" type="TextureButton" parent="UIElements/StartGame/StartContainer"]
+pause_mode = 2
 margin_right = 255.0
 margin_bottom = 78.0
 texture_normal = ExtResource( 18 )
@@ -537,6 +377,7 @@ texture_pressed = ExtResource( 17 )
 texture_hover = ExtResource( 16 )
 
 [node name="StartLabelBase" type="NinePatchRect" parent="UIElements/StartGame/StartContainer/Start"]
+pause_mode = 2
 margin_left = 129.0
 margin_top = -45.0
 margin_right = 289.0
@@ -552,6 +393,7 @@ __meta__ = {
 }
 
 [node name="StartLabel" type="Label" parent="UIElements/StartGame/StartContainer/Start/StartLabelBase"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
@@ -565,6 +407,7 @@ __meta__ = {
 }
 
 [node name="StartPlus" type="TextureButton" parent="UIElements/StartGame/StartContainer"]
+pause_mode = 2
 margin_left = 280.0
 margin_right = 535.0
 margin_bottom = 78.0
@@ -574,6 +417,7 @@ texture_hover = ExtResource( 22 )
 texture_disabled = ExtResource( 21 )
 
 [node name="StartPlusLabelBase" type="NinePatchRect" parent="UIElements/StartGame/StartContainer/StartPlus"]
+pause_mode = 2
 margin_left = 77.0
 margin_top = -45.0
 margin_right = 437.0
@@ -589,6 +433,7 @@ __meta__ = {
 }
 
 [node name="StartPlusLabel" type="Label" parent="UIElements/StartGame/StartContainer/StartPlus/StartPlusLabelBase"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
@@ -602,6 +447,7 @@ __meta__ = {
 }
 
 [node name="StartPlusUnlockLabelBase" type="NinePatchRect" parent="UIElements/StartGame/StartContainer/StartPlus"]
+pause_mode = 2
 margin_left = 77.0
 margin_top = -45.0
 margin_right = 300.0
@@ -617,12 +463,13 @@ __meta__ = {
 }
 
 [node name="StartPlusUnlockLabel" type="Label" parent="UIElements/StartGame/StartContainer/StartPlus/StartPlusUnlockLabelBase"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
 custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
 custom_fonts/font = ExtResource( 23 )
-text = "Beat normal to unlock"
+text = "Post jam version?"
 align = 1
 valign = 1
 __meta__ = {
@@ -630,6 +477,7 @@ __meta__ = {
 }
 
 [node name="ScreenFade" type="ColorRect" parent="UIElements"]
+pause_mode = 2
 visible = false
 margin_right = 1280.0
 margin_bottom = 720.0
@@ -640,13 +488,16 @@ __meta__ = {
 }
 
 [node name="ScreenFadeAnimator" type="AnimationPlayer" parent="UIElements/ScreenFade"]
+pause_mode = 2
 anims/Fade = SubResource( 15 )
 anims/FadeQuick = SubResource( 20 )
 
 [node name="ButtonAndTitleFade" type="AnimationPlayer" parent="UIElements"]
+pause_mode = 2
 anims/FadeOut = SubResource( 21 )
 
 [node name="StartHint" type="NinePatchRect" parent="UIElements"]
+pause_mode = 2
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 180.0
 margin_top = 320.0
@@ -662,6 +513,7 @@ __meta__ = {
 }
 
 [node name="StartHintLabel" type="Label" parent="UIElements/StartHint"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
@@ -675,36 +527,29 @@ __meta__ = {
 }
 
 [node name="StartHintAnimator" type="AnimationPlayer" parent="UIElements/StartHint"]
+pause_mode = 2
 anims/Fade = SubResource( 23 )
 
+[node name="ClickSound" type="AudioStreamPlayer" parent="UIElements"]
+pause_mode = 2
+stream = ExtResource( 6 )
+bus = "SFX"
+
 [node name="Ambient" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 24 )
 volume_db = -80.0
 bus = "SFX"
 
 [node name="AudioFade" type="AnimationPlayer" parent="Ambient"]
+pause_mode = 2
 anims/FadeIn = SubResource( 16 )
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 25 )
-volume_db = -80.0
-bus = "Music"
-
-[node name="AudioFade" type="AnimationPlayer" parent="Music"]
-root_node = NodePath("../../Ambient")
-anims/FadeIn = SubResource( 17 )
-anims/FadeOut = SubResource( 18 )
 
 [connection signal="input_event" from="DoorArea" to="." method="_on_DoorArea_input_event"]
 [connection signal="mouse_entered" from="DoorArea" to="." method="_on_DoorArea_mouse_entered"]
 [connection signal="mouse_exited" from="DoorArea" to="." method="_on_DoorArea_mouse_exited"]
 [connection signal="animation_finished" from="CutsceneCamera/CutsceneCameraAnimator" to="." method="_on_CutsceneCameraAnimator_animation_finished"]
-[connection signal="mouse_entered" from="UIElements/SettingsInfo/HorizContainer/InfoButton" to="." method="_on_InfoButton_mouse_entered"]
-[connection signal="mouse_exited" from="UIElements/SettingsInfo/HorizContainer/InfoButton" to="." method="_on_InfoButton_mouse_exited"]
-[connection signal="mouse_entered" from="UIElements/SettingsInfo/HorizContainer/HelpButton" to="." method="_on_HelpButton_mouse_entered"]
-[connection signal="mouse_exited" from="UIElements/SettingsInfo/HorizContainer/HelpButton" to="." method="_on_HelpButton_mouse_exited"]
-[connection signal="mouse_entered" from="UIElements/SettingsInfo/HorizContainer/SettingsButton" to="." method="_on_SettingsButton_mouse_entered"]
-[connection signal="mouse_exited" from="UIElements/SettingsInfo/HorizContainer/SettingsButton" to="." method="_on_SettingsButton_mouse_exited"]
+[connection signal="button_down" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_button_down"]
 [connection signal="button_up" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_button_up"]
 [connection signal="mouse_entered" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_mouse_entered"]
 [connection signal="mouse_exited" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_mouse_exited"]

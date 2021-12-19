@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Doorway.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Base.png" type="Texture" id=2]
@@ -13,6 +13,11 @@
 [ext_resource path="res://Scenes/Objects/UIObjects/MoveButton_Right.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectablePlant1.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectablePlant2.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectableKitto.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectableLitter.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Assets/Doorway/DoorwayRoom_Calendar.png" type="Texture" id=16]
+[ext_resource path="res://Fonts/MenuTooltips.tres" type="DynamicFont" id=17]
+[ext_resource path="res://Assets/UI/UI_NinePatch.png" type="Texture" id=18]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Randomiser"
@@ -124,13 +129,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tooltips" type="Control" parent="DefaultElements"]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Firelight" type="Node2D" parent="DefaultElements"]
 
 [node name="BaseLight" type="Light2D" parent="DefaultElements/Firelight"]
@@ -174,6 +172,7 @@ centered = false
 [node name="DetailsSprite" type="Sprite" parent="DefaultElements/Sprites"]
 
 [node name="SnowBackground" type="Particles2D" parent="DefaultElements/Sprites"]
+pause_mode = 2
 light_mask = 16
 position = Vector2( 981, -33 )
 z_index = -1
@@ -217,3 +216,70 @@ position = Vector2( 84, 220 )
 
 [node name="SelectablePlant2" parent="GameObjects" instance=ExtResource( 13 )]
 position = Vector2( 201, 211 )
+
+[node name="SelectableKitto" parent="GameObjects" instance=ExtResource( 14 )]
+position = Vector2( 943, 429 )
+
+[node name="SelectableLitter" parent="GameObjects" instance=ExtResource( 15 )]
+position = Vector2( 30, 511 )
+
+[node name="Calendar" type="Sprite" parent="GameObjects"]
+position = Vector2( 490, 310 )
+texture = ExtResource( 16 )
+
+[node name="Tooltips" type="Control" parent="."]
+light_mask = 0
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipDoorway" type="MarginContainer" parent="Tooltips"]
+light_mask = 0
+margin_left = 776.0
+margin_top = 285.0
+margin_right = 1176.0
+margin_bottom = 434.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TooltipRect" type="NinePatchRect" parent="Tooltips/TooltipDoorway"]
+light_mask = 0
+margin_right = 400.0
+margin_bottom = 149.0
+texture = ExtResource( 18 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Tooltips/TooltipDoorway"]
+light_mask = 0
+margin_right = 400.0
+margin_bottom = 149.0
+mouse_filter = 2
+
+[node name="TooltipLabel" type="Label" parent="Tooltips/TooltipDoorway/CenterContainer"]
+light_mask = 0
+margin_left = 17.0
+margin_top = 26.0
+margin_right = 383.0
+margin_bottom = 122.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 17 )
+text = "Mr. Mittens can be very demanding! Make
+sure you keep his litter clean and food full!
+His food is found under the sink."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

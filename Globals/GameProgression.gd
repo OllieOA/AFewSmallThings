@@ -15,7 +15,7 @@ func _ready() -> void:
 	
 	# Game construction
 	plus_mode = false
-	global_win_state = true
+	global_win_state = false
 	
 	
 	
