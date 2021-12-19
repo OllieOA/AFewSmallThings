@@ -60,6 +60,12 @@ centered = false
 [node name="Cursor" type="Sprite" parent="."]
 z_index = 10
 
+[node name="AlertNotification" type="AudioStreamPlayer2D" parent="."]
+
+[node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="DropSound" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="input_event" from="DeliveryArea" to="." method="_on_SelectArea_input_event"]
 [connection signal="mouse_entered" from="DeliveryArea" to="." method="_on_SelectArea_mouse_entered"]
 [connection signal="mouse_exited" from="DeliveryArea" to="." method="_on_SelectArea_mouse_exited"]

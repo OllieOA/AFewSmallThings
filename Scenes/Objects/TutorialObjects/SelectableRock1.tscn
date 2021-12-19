@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Objects/TutorialObjects/SelectableRock1.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tutorial/TutorialSceneRock1.png" type="Texture" id=2]
+[ext_resource path="res://Sounds/StonesDrop-01.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/StonePick-01.ogg" type="AudioStream" id=4]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 21.0
@@ -61,6 +63,14 @@ centered = false
 [node name="OutlineSelection" type="Sprite" parent="."]
 modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
 centered = false
+
+[node name="AlertNotification" type="AudioStreamPlayer2D" parent="."]
+
+[node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="DropSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
 
 [connection signal="input_event" from="SelectArea" to="." method="_on_SelectArea_input_event"]
 [connection signal="mouse_entered" from="SelectArea" to="." method="_on_SelectArea_mouse_entered"]

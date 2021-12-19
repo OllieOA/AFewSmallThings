@@ -334,6 +334,7 @@ process_material = SubResource( 12 )
 
 [node name="TitleForeground" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
+frame = 1
 playing = true
 centered = false
 

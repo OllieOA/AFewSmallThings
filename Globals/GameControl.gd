@@ -2,6 +2,7 @@ extends Node2D
 
 var following_scene
 var current_scene
+var current_scene_name
 
 onready var animation_player = $AnimationPlayer
 
@@ -17,7 +18,7 @@ func _ready() -> void:
 
 # Scene management
 
-func goto_scene(path, speed):
+func goto_scene(path, speed=1):
 	following_scene = path
 	animation_player.playback_speed = speed
 	animation_player.play("Fade")

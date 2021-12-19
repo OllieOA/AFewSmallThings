@@ -203,6 +203,8 @@ func _on_CutsceneCameraAnimator_animation_finished(anim_name: String) -> void:
 	GameControl.goto_scene("res://Scenes/Tutorial.tscn", 1.0)
 	
 func _disable_buttons():
+	start_button.hide()
+	start_plus_button.hide()
 	start_button.disabled = true
 	start_plus_button.disabled = true
 	settings_button.disabled = true

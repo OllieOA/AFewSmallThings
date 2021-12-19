@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Tutorial/TutorialSceneLogs.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Objects/TutorialObjects/SelectableLogs.gd" type="Script" id=2]
+[ext_resource path="res://Sounds/LogsPick-01.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/DoorUnlocking.ogg" type="AudioStream" id=4]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 29.0176
@@ -60,6 +62,14 @@ centered = false
 [node name="Cursor" type="Sprite" parent="."]
 modulate = Color( 0.372549, 0.72549, 0.129412, 0.533333 )
 centered = false
+
+[node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+max_distance = 3000.0
+
+[node name="DropSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+max_distance = 3000.0
 
 [connection signal="input_event" from="SelectArea" to="." method="_on_SelectArea_input_event"]
 [connection signal="mouse_entered" from="SelectArea" to="." method="_on_SelectArea_mouse_entered"]

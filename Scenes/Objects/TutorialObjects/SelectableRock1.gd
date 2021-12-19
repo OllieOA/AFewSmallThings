@@ -14,4 +14,3 @@ func _ready():
 	pickable = true
 	picked = false
 	dropable = true
-	extractable = false
