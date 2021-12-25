@@ -148,7 +148,6 @@ centered = false
 [node name="FliesSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 77, 44 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 
 [node name="Cursor" type="Sprite" parent="."]

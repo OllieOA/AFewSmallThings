@@ -16,3 +16,6 @@ data_*/
 *.gif
 *.mp4
 External/*
+
+# Python ignores
+Python_venv/*

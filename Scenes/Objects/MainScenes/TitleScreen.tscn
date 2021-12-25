@@ -1,0 +1,559 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://Assets/Title/TitleBackground_background.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Title/TitleBackground_text.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Objects/MainScenes/TitleScreen.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Title/TitleBackground_foreground.png" type="Texture" id=4]
+[ext_resource path="res://Assets/UI/TitleMenu_StartBase.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/TitleDoorMarker.png" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/TitleMenu_StartPClick.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/TitleMenu_StartMouseover.png" type="Texture" id=8]
+[ext_resource path="res://Assets/UI/TitleMenu_StartPDisabled.png" type="Texture" id=9]
+[ext_resource path="res://Assets/UI/TitleMenu_StartPMouseover.png" type="Texture" id=10]
+[ext_resource path="res://Sounds/UIClick-03.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Assets/UI/TitleMenu_StartPBase.png" type="Texture" id=12]
+[ext_resource path="res://Sounds/TitleWind.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Assets/UI/TitleMenu_StartClick.png" type="Texture" id=14]
+[ext_resource path="res://Fonts/MenuTooltips.tres" type="DynamicFont" id=15]
+[ext_resource path="res://Assets/UI/UI_NinePatch.png" type="Texture" id=16]
+
+[sub_resource type="ParticlesMaterial" id=12]
+emission_shape = 2
+emission_box_extents = Vector3( 800, 1, 1 )
+flag_disable_z = true
+direction = Vector3( 0.1, 1, 0 )
+spread = 6.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 3.0
+color = Color( 0.788235, 0.839216, 0.870588, 1 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 4 )
+region = Rect2( 1280, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 4 )
+region = Rect2( 2560, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 4 )
+region = Rect2( 3840, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 5120, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 6400, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
+region = Rect2( 7680, 0, 1280, 720 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 4 )
+region = Rect2( 8960, 0, 1280, 720 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
+
+[sub_resource type="ParticlesMaterial" id=10]
+emission_shape = 2
+emission_box_extents = Vector3( 800, 1, 1 )
+flag_disable_z = true
+direction = Vector3( 0.3, 1, 0 )
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 140.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 4.0
+scale_random = 1.0
+color = Color( 0.839216, 0.890196, 0.92549, 1 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 2
+emission_box_extents = Vector3( 800, 60, 1 )
+flag_disable_z = true
+direction = Vector3( 0.5, 1, 0 )
+spread = 20.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 180.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 10.0
+tangential_accel_random = 1.0
+scale = 8.0
+scale_random = 1.0
+color = Color( 0.952941, 0.992157, 1, 1 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 54.25, 60 )
+
+[sub_resource type="Animation" id=14]
+resource_name = "blink"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.827451, 0.870588, 0.054902, 1 ), Color( 0.976471, 1, 0.541176, 1 ), Color( 0.827451, 0.870588, 0.054902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 3, 3, 0.3 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "CameraZoomOnDoor"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.6, 0.6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( 640, 360 ), Vector2( 746, 450 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "SlowZoom"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.1, 1 ),
+"transitions": PoolRealArray( 2, 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ), Vector2( 0.4, 0.4 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "FadeQuick"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "FadeOut"
+tracks/0/type = "value"
+tracks/0/path = NodePath("../TitleText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StartGame:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "Fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "FadeIn"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, 0.0 ]
+}
+
+[node name="TitleScreen" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 3 )
+
+[node name="TitleBackground" type="Sprite" parent="."]
+pause_mode = 2
+texture = ExtResource( 1 )
+centered = false
+
+[node name="SnowBackground" type="Particles2D" parent="."]
+pause_mode = 2
+position = Vector2( 600, -20 )
+amount = 500
+lifetime = 5.0
+preprocess = 20.0
+visibility_rect = Rect2( -100, -100, 1200, 800 )
+process_material = SubResource( 12 )
+
+[node name="TitleForeground" type="AnimatedSprite" parent="."]
+pause_mode = 2
+frames = SubResource( 9 )
+frame = 5
+playing = true
+centered = false
+
+[node name="SnowMidground" type="Particles2D" parent="."]
+pause_mode = 2
+position = Vector2( 500, -20 )
+amount = 600
+lifetime = 5.0
+preprocess = 20.0
+visibility_rect = Rect2( -100, -100, 1200, 800 )
+process_material = SubResource( 10 )
+
+[node name="TitleText" type="Sprite" parent="."]
+pause_mode = 2
+texture = ExtResource( 2 )
+centered = false
+
+[node name="SnowForeground" type="Particles2D" parent="."]
+pause_mode = 2
+position = Vector2( 500, -20 )
+amount = 700
+lifetime = 10.0
+preprocess = 20.0
+visibility_rect = Rect2( -100, -100, 1200, 800 )
+process_material = SubResource( 11 )
+
+[node name="DoorArea" type="Area2D" parent="."]
+pause_mode = 2
+position = Vector2( 746, 532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorArea"]
+pause_mode = 2
+shape = SubResource( 13 )
+
+[node name="MarkerSprite" type="Sprite" parent="DoorArea"]
+pause_mode = 2
+modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
+texture = ExtResource( 6 )
+
+[node name="DoorMarkerAnimator" type="AnimationPlayer" parent="DoorArea/MarkerSprite"]
+pause_mode = 2
+anims/blink = SubResource( 14 )
+
+[node name="CutsceneCamera" type="Camera2D" parent="."]
+pause_mode = 2
+position = Vector2( 640, 360 )
+current = true
+zoom = Vector2( 0.598347, 0.598347 )
+
+[node name="CutsceneCameraAnimator" type="AnimationPlayer" parent="CutsceneCamera"]
+pause_mode = 2
+anims/CameraZoomOnDoor = SubResource( 19 )
+anims/SlowZoom = SubResource( 22 )
+
+[node name="UIElements" type="Control" parent="."]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartGame" type="MarginContainer" parent="UIElements"]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 458.0
+margin_top = 354.0
+margin_right = 993.0
+margin_bottom = 432.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartContainer" type="HBoxContainer" parent="UIElements/StartGame"]
+pause_mode = 2
+margin_right = 535.0
+margin_bottom = 78.0
+custom_constants/separation = 25
+
+[node name="Start" type="TextureButton" parent="UIElements/StartGame/StartContainer"]
+pause_mode = 2
+margin_right = 255.0
+margin_bottom = 78.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 8 )
+
+[node name="StartLabelBase" type="NinePatchRect" parent="UIElements/StartGame/StartContainer/Start"]
+pause_mode = 2
+margin_left = 129.0
+margin_top = -45.0
+margin_right = 289.0
+margin_bottom = -7.0
+texture = ExtResource( 16 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartLabel" type="Label" parent="UIElements/StartGame/StartContainer/Start/StartLabelBase"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 15 )
+text = "Play normally"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartPlus" type="TextureButton" parent="UIElements/StartGame/StartContainer"]
+pause_mode = 2
+margin_left = 280.0
+margin_right = 535.0
+margin_bottom = 78.0
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 10 )
+texture_disabled = ExtResource( 9 )
+
+[node name="StartPlusLabelBase" type="NinePatchRect" parent="UIElements/StartGame/StartContainer/StartPlus"]
+pause_mode = 2
+margin_left = 77.0
+margin_top = -45.0
+margin_right = 437.0
+margin_bottom = -7.0
+texture = ExtResource( 16 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartPlusLabel" type="Label" parent="UIElements/StartGame/StartContainer/StartPlus/StartPlusLabelBase"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 15 )
+text = "Play with more walls and more chaos"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartPlusUnlockLabelBase" type="NinePatchRect" parent="UIElements/StartGame/StartContainer/StartPlus"]
+pause_mode = 2
+margin_left = 77.0
+margin_top = -45.0
+margin_right = 300.0
+margin_bottom = -7.0
+texture = ExtResource( 16 )
+region_rect = Rect2( -0.109245, -0.00251293, 72.0668, 72.1922 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartPlusUnlockLabel" type="Label" parent="UIElements/StartGame/StartContainer/StartPlus/StartPlusUnlockLabelBase"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 15 )
+text = "Post jam version?"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScreenFade" type="ColorRect" parent="UIElements"]
+pause_mode = 2
+visible = false
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScreenFadeAnimator" type="AnimationPlayer" parent="UIElements/ScreenFade"]
+pause_mode = 2
+anims/Fade = SubResource( 15 )
+anims/FadeQuick = SubResource( 20 )
+
+[node name="ButtonAndTitleFade" type="AnimationPlayer" parent="UIElements"]
+pause_mode = 2
+anims/FadeOut = SubResource( 21 )
+
+[node name="StartHint" type="NinePatchRect" parent="UIElements"]
+pause_mode = 2
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 180.0
+margin_top = 320.0
+margin_right = 400.0
+margin_bottom = 360.0
+texture = ExtResource( 16 )
+patch_margin_left = 6
+patch_margin_top = 3
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartHintLabel" type="Label" parent="UIElements/StartHint"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.403922, 0.403922, 1 )
+custom_fonts/font = ExtResource( 15 )
+text = "Click the door to start"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartHintAnimator" type="AnimationPlayer" parent="UIElements/StartHint"]
+pause_mode = 2
+anims/Fade = SubResource( 23 )
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="UIElements"]
+pause_mode = 2
+stream = ExtResource( 11 )
+bus = "SFX"
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 13 )
+volume_db = -80.0
+bus = "SFX"
+
+[node name="AudioFade" type="AnimationPlayer" parent="Ambient"]
+pause_mode = 2
+anims/FadeIn = SubResource( 16 )
+
+[connection signal="input_event" from="DoorArea" to="." method="_on_DoorArea_input_event"]
+[connection signal="mouse_entered" from="DoorArea" to="." method="_on_DoorArea_mouse_entered"]
+[connection signal="mouse_exited" from="DoorArea" to="." method="_on_DoorArea_mouse_exited"]
+[connection signal="animation_finished" from="CutsceneCamera/CutsceneCameraAnimator" to="." method="_on_CutsceneCameraAnimator_animation_finished"]
+[connection signal="button_down" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_button_down"]
+[connection signal="button_up" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_button_up"]
+[connection signal="mouse_entered" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_mouse_entered"]
+[connection signal="mouse_exited" from="UIElements/StartGame/StartContainer/Start" to="." method="_on_Start_mouse_exited"]
+[connection signal="button_up" from="UIElements/StartGame/StartContainer/StartPlus" to="." method="_on_StartPlus_button_up"]
+[connection signal="mouse_entered" from="UIElements/StartGame/StartContainer/StartPlus" to="." method="_on_StartPlus_mouse_entered"]
+[connection signal="mouse_exited" from="UIElements/StartGame/StartContainer/StartPlus" to="." method="_on_StartPlus_mouse_exited"]
+[connection signal="animation_finished" from="UIElements/ScreenFade/ScreenFadeAnimator" to="." method="_on_ScreenFadeAnimator_animation_finished"]

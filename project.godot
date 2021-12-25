@@ -9,26 +9,50 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "BaseItem",
+"language": "GDScript",
+"path": "res://Test/BaseItem.gd"
+}, {
 "base": "SelectableItem",
 "class": "MoveButton",
 "language": "GDScript",
 "path": "res://Scenes/Objects/BaseObjects/MoveButton.gd"
 }, {
 "base": "Node2D",
+"class": "OLD_SelectableItem",
+"language": "GDScript",
+"path": "res://Scenes/Objects/BaseObjects/OLD_SelectableItem.gd"
+}, {
+"base": "Node2D",
+"class": "PickableItem",
+"language": "GDScript",
+"path": "res://PickableItem.gd"
+}, {
+"base": "Node2D",
 "class": "SelectableItem",
 "language": "GDScript",
 "path": "res://Scenes/Objects/BaseObjects/SelectableItem.gd"
+}, {
+"base": "SelectableItem",
+"class": "TiltableItem",
+"language": "GDScript",
+"path": "res://Scenes/Objects/BaseObjects/TiltableItem.gd"
 } ]
 _global_script_class_icons={
+"BaseItem": "",
 "MoveButton": "",
-"SelectableItem": ""
+"OLD_SelectableItem": "",
+"PickableItem": "",
+"SelectableItem": "",
+"TiltableItem": ""
 }
 
 [application]
 
 config/name="A Few Small Things"
 config/description="Cat sit for your friend in a relaxing cabin getaway. All she asks is that you do a few small things around the house."
-run/main_scene="res://Scenes/TitleScreen.tscn"
+run/main_scene="res://Scenes/Objects/MainScenes/TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]

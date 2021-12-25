@@ -111,7 +111,7 @@ position = Vector2( -112.125, -198.625 )
 shape = SubResource( 5 )
 
 [node name="OutlineAlert" type="Sprite" parent="."]
-modulate = Color( 0.815686, 0.121569, 0.121569, 1 )
+modulate = Color( 0.870588, 0.588235, 0.054902, 1 )
 position = Vector2( 200, 120 )
 texture = ExtResource( 5 )
 

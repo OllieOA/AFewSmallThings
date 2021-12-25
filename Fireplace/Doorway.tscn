@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Scenes/Doorway.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Objects/MainScenes/Doorway.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Base.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Flame2D/FlameBase.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Flame2D/CeilingCorners.png" type="Texture" id=4]

@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 		events_started = true
 		_start_events()
 	
-	
+
 func _start_events():
 	main_timer = Timer.new()
 	add_child(main_timer)

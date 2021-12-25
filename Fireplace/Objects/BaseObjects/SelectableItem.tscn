@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/Objects/BaseObjects/SelectableItem.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Objects/BaseObjects/OLD_SelectableItem.gd" type="Script" id=1]
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 29.0176
