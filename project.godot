@@ -14,20 +14,35 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Test/BaseItem.gd"
 }, {
+"base": "Node2D",
+"class": "CabinScene",
+"language": "GDScript",
+"path": "res://Scenes/MainScenes/CabinScene.gd"
+}, {
+"base": "SelectableItem",
+"class": "DecayableItem",
+"language": "GDScript",
+"path": "res://Scenes/Objects/BaseObjects/DecayableItem.gd"
+}, {
+"base": "SelectableItem",
+"class": "FallableItem",
+"language": "GDScript",
+"path": "res://Scenes/Objects/BaseObjects/FallableItem.gd"
+}, {
+"base": "Node",
+"class": "GlobalObjectData",
+"language": "GDScript",
+"path": "res://Globals/GlobalObjectData.gd"
+}, {
 "base": "SelectableItem",
 "class": "MoveButton",
 "language": "GDScript",
 "path": "res://Scenes/Objects/BaseObjects/MoveButton.gd"
 }, {
-"base": "Node2D",
-"class": "OLD_SelectableItem",
-"language": "GDScript",
-"path": "res://Scenes/Objects/BaseObjects/OLD_SelectableItem.gd"
-}, {
-"base": "Node2D",
+"base": "SelectableItem",
 "class": "PickableItem",
 "language": "GDScript",
-"path": "res://PickableItem.gd"
+"path": "res://Scenes/Objects/BaseObjects/PickableItem.gd"
 }, {
 "base": "Node2D",
 "class": "SelectableItem",
@@ -41,8 +56,11 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BaseItem": "",
+"CabinScene": "",
+"DecayableItem": "",
+"FallableItem": "",
+"GlobalObjectData": "",
 "MoveButton": "",
-"OLD_SelectableItem": "",
 "PickableItem": "",
 "SelectableItem": "",
 "TiltableItem": ""
@@ -52,7 +70,7 @@ _global_script_class_icons={
 
 config/name="A Few Small Things"
 config/description="Cat sit for your friend in a relaxing cabin getaway. All she asks is that you do a few small things around the house."
-run/main_scene="res://Scenes/Objects/MainScenes/TitleScreen.tscn"
+run/main_scene="res://Scenes/MainScenes/TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -176,5 +194,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_clear_color=Color( 0.584314, 0.741176, 0.780392, 1 )
 environment/default_environment="res://default_env.tres"

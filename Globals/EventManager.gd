@@ -15,7 +15,6 @@ var room_alert_levels
 
 func _ready() -> void:
 	events_started = false
-	GameControl.game_started = false
 	object_dict = {}
 	room_alert_levels = {
 		"Doorway": 3,
@@ -42,25 +41,28 @@ func _start_events():
 	main_timer.start()
 
 
-func add_object(object, alert_level, wall_location, base_random_chance, object_decayable, object_tiltable, object_fallable, object_position):
-	# Update dict
-	object_dict[object] = {
-		"alert_level": alert_level, 
-		"base_random_chance": base_random_chance,
-		"random_chance": base_random_chance, 
-		"wall_location": wall_location, 
-		"object_decayable": object_decayable, 
-		"object_tiltable": object_tiltable, 
-		"object_fallable": object_fallable,
-		"object_position": object_position,
-		"object_alertable": true
-		}
+func add_object(object):
+	if object is FallableItem \
+			or object is DecayableItem \
+			or object is TiltableItem:
+		
+		var curr_object_name = object.get_name()
+		
+		var new_data_object = GlobalObjectData.new()
+		new_data_object.object_name = curr_object_name
+		new_data_object.alert_level = 3
+		new_data_object.base_random_chance = object.base_random_chance
+		new_data_object.random_chance = object.base_random_chance
+		new_data_object.wall_location = object.wall_location
+		new_data_object.object_alertable = true
+		new_data_object.object_active = true
+		new_data_object.object_position = object.get_global_position()
+		new_data_object.object_min_alert_level = object.alert_level
+
+		object_dict[curr_object_name] = new_data_object
 
 
 func main_timeout():
-	print(GameControl.cursor_inventory)
-#	print("DEBUG: CURRENT GLOBAL DICT ", room_alert_levels)
-#	print("DEBUG: CURRENT GLOBAL DICT ", object_dict)
 	var curr_rand = rng.randi_range(0, 100)
 	var random_event = false
 
@@ -72,50 +74,59 @@ func main_timeout():
 		if len(object_list) == 0:
 			break
 		
-		var object_name_to_check = object_list.pop_at(0)
-		var object_active = (
-			object_dict[object_name_to_check]["object_tiltable"] or
-			object_dict[object_name_to_check]["object_decayable"] or
-			object_dict[object_name_to_check]["object_fallable"]
-		)
-		if object_dict[object_name_to_check]["object_alertable"] and object_active:
-		
-#			print("DEBUG: RANDOMISING CHECK WITH ", object_name_to_check)
-			if curr_rand < object_dict[object_name_to_check]["random_chance"]:
-#				print("DEBUG: RANDOMISING")
-				object_dict[object_name_to_check]["random_chance"] = object_dict[object_name_to_check]["base_random_chance"]
+		var object_name = object_list.pop_at(0)
+		var curr_data_object: GlobalObjectData = object_dict[object_name]
+		if curr_data_object.object_alertable and curr_data_object.object_active:
+			if curr_rand < curr_data_object.random_chance \
+					and curr_data_object.alert_level > curr_data_object.object_min_alert_level:
 				random_event = true
-				if object_dict[object_name_to_check]["object_decayable"]:
-					object_dict[object_name_to_check]["alert_level"] -= 1
-				else:
-					if object_dict[object_name_to_check]["alert_level"] == 3:
-						object_dict[object_name_to_check]["alert_level"] = 2
-				object_dict[object_name_to_check]["object_alertable"] = false
-				emit_signal("random_change", object_name_to_check)
-				if GameControl.current_scene_name == object_dict[object_name_to_check]["wall_location"]:
-					# Object in current scene, access it and use the method
-					var node_to_extract = "/root/" + object_dict[object_name_to_check]["wall_location"] + "/GameObjects/" + object_name_to_check
-#					print("DEBUG: TRYING TO PROCESS ", node_to_extract)
-					var object_to_check = get_tree().get_root().get_node(node_to_extract)
-					object_to_check.process_alert(object_dict[object_name_to_check]["alert_level"], object_name_to_check)
-				else:
-					# We are not in the current scene
-					if object_dict[object_name_to_check]["object_decayable"]:
-						if object_dict[object_name_to_check]["alert_level"] == 1:
-							play_notification_level(1, Vector2(640, 320))
-						elif object_dict[object_name_to_check]["alert_level"] == 2:
-							play_notification_level(2, Vector2(640, 320))
-						elif object_dict[object_name_to_check]["alert_level"] == 0:
-							play_notification_level(0, Vector2(640, 320))
-						alert_cooldown_start(object_name_to_check)
+				_raise_alert(curr_data_object)
 			else:
-#				print("DEBUG: INCREMENTING RANDOM CHANCE")
-				object_dict[object_name_to_check]["random_chance"] += 1
-				
+				curr_data_object.random_chance += 1
 		else:
-#			print("DEBUG: SKIPPING, NOT ALERTABLE")
 			pass
-		
+
+
+func _raise_alert(curr_object):
+#	object_dict[object_name]["random_chance"] = object_dict[object_name]["base_random_chance"]
+#	if object_dict[object_name]["object_decayable"]:
+#		object_dict[object_name]["alert_level"] -= 1
+#	else:
+#		if object_dict[object_name]["alert_level"] == 3:
+#			object_dict[object_name]["alert_level"] = 2
+#	object_dict[object_name]["object_alertable"] = false
+#	emit_signal("random_change", object_name)
+#	if GameControl.current_scene_name == object_dict[object_name]["wall_location"]:
+#		var node_to_extract = "/root/" + object_dict[object_name]["wall_location"] + "/GameObjects/" + object_name
+#		var object_to_check = get_tree().get_root().get_node(node_to_extract)
+#		object_to_check.process_alert(object_dict[object_name]["alert_level"], object_name)
+#	else:
+#		# We are not in the current scene
+#		if object_dict[object_name]["object_decayable"]:
+#			if object_dict[object_name]["alert_level"] == 1:
+#				play_notification_level(1, Vector2(640, 320))
+#			elif object_dict[object_name]["alert_level"] == 2:
+#				play_notification_level(2, Vector2(640, 320))
+#			elif object_dict[object_name]["alert_level"] == 0:
+#				play_notification_level(0, Vector2(640, 320))
+#			alert_cooldown_start(object_name)
+
+	curr_object.random_chance = curr_object.base_random_chance
+	curr_object.alert_level = max(curr_object.alert_level-1, curr_object.object_min_alert_level)
+	
+	curr_object.object_alertable = false
+	emit_signal("random_change", curr_object)
+	alert_cooldown_start(curr_object)
+	
+	if GameControl.current_scene_name == curr_object.wall_location:
+		var node_to_extract = "/root/" + curr_object.wall_location + "/GameObjects/" + curr_object.object_name
+		var object_to_check = get_tree().get_root().get_node(node_to_extract)
+		play_notification_level(curr_object.alert_level, curr_object.object_position)
+		object_to_check.process_alert(curr_object.alert_level, curr_object.object_name)
+	else:
+		# We are not in the current scene - just play notification in middle of screen
+		play_notification_level(curr_object.alert_level, Vector2(640, 320))
+
 
 func play_notification_level(level, position_to_set):
 	if level == 1:
@@ -132,19 +143,17 @@ func play_notification_level(level, position_to_set):
 		yield(kill_sound, "finished")
 		
 
-func alert_cooldown_start(object_name):
+func alert_cooldown_start(object):
 	var alert_cooldown = Timer.new()
-#	print("DEBUG: COOLDOWN STARTED FOR ", object_name, " USING TIMER ", str(alert_cooldown))
 	add_child(alert_cooldown)
 	alert_cooldown.one_shot = true
-	alert_cooldown.wait_time = 5.0
-	alert_cooldown.connect("timeout", self, "_alert_cooldown_timeout", [object_name])
+	alert_cooldown.wait_time = 10.0
+	alert_cooldown.connect("timeout", self, "_alert_cooldown_timeout", [object.object_name])
 	alert_cooldown.start()
 
 
 func _alert_cooldown_timeout(object_name):
-#	print("DEBUG: COOLDOWN ENDED FOR ", object_name)
-	object_dict[object_name]["object_alertable"] = true
+	object_dict[object_name].object_alertable = true
 
 
 func _determine_room_levels():

@@ -1,9 +1,11 @@
 extends SelectableItem
-
 class_name MoveButton
 
 var local_area_values
 var my_direction
+var scene_change_speed
+export (NodePath) onready var bob_animator = get_node(bob_animator) as AnimationPlayer
+
 
 var direction_dict = {
 	"Doorway": {
@@ -30,10 +32,10 @@ var direction_dict = {
 }
 
 var scene_lookup = {
-	"Doorway": "res://Scenes/Doorway.tscn",
-	"Fireplace": "res://Scenes/Fireplace.tscn",
-	"Kitchen": "res://Scenes/Kitchen.tscn",
-	"Storage": "res://Scenes/Storage.tscn",
+	"Doorway": "res://Scenes/MainScenes/Doorway.tscn",
+	"Fireplace": "res://Scenes/MainScenes/Fireplace.tscn",
+	"Kitchen": "res://Scenes/MainScenes/Kitchen.tscn",
+	"Storage": "res://Scenes/MainScenes/Storage.tscn",
 }
 
 func _ready() -> void:
@@ -44,6 +46,8 @@ func _ready() -> void:
 		"Kitchen": -1,
 		"Storage": -1
 	}
+	scene_change_speed = 3.0
+	bob_animator.play("SlowBob")
 
 
 func _process(delta: float) -> void:
@@ -65,19 +69,20 @@ func _process(delta: float) -> void:
 
 func _set_alert_level(level, area):
 	if level == 1 and local_area_values[area] != 1:
-		outline_alert_sprite.texture = outline_alert_level1_texture
-		outline_alert_sprite.show()
 		alert_animator.play("BlinkState1")
 		local_area_values[area] = 1
 		
 	if level == 2 and local_area_values[area] != 2:
-		outline_alert_sprite.texture = outline_alert_level2_texture
-		outline_alert_sprite.show()
 		alert_animator.play("BlinkState2")
 		local_area_values[area] = 2
 		
 	if level == 3 and local_area_values[area] != 3:
-		outline_alert_sprite.hide()
-		alert_animator.stop()
+		alert_sprite.hide()
 		local_area_values[area] = 3
 
+
+func _move_select(direction):
+	var curr_dir_options = direction_dict[GameControl.current_scene_name]
+	var scene_in_direction_of = curr_dir_options[direction]
+	var scene_name_in_direction_of = scene_lookup[scene_in_direction_of]
+	GameControl.goto_scene(scene_name_in_direction_of, scene_change_speed)

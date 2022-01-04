@@ -1,21 +1,25 @@
 extends Node2D
 
+# Handle scene parsing
 var following_scene
-var current_scene
-var current_scene_name
+var current_scene: Node
+var current_scene_name: String
 
-var game_started
-var kitchen_visited
-var doorway_visited
-var fireplace_visited
-var storage_visted
+# Handle scene logic
+var game_started : bool
+var kitchen_visited: bool
+var doorway_visited : bool
+var fireplace_visited : bool
+var storage_visted : bool
+
+var fire_extinguished: bool
 
 onready var animation_player = $AnimationPlayer
 onready var music_audio = $Music
 onready var music_fade = $Music/AudioFade
 onready var cursor_sprite = $CanvasLayer/Cursor
-var main_input_name
-var cancel_input_name
+var main_input_name : String
+var cancel_input_name : String
 
 # Set up a cursor inventory
 var cursor_inventory
@@ -35,7 +39,7 @@ func _ready() -> void:
 	cursor_inventory = null
 
 # Scene management
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if cursor_inventory != null:
 		cursor_sprite.position = get_global_mouse_position()
 
@@ -63,12 +67,12 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	GameControl.following_scene = null
 
 
-func update_cursor_texture(texture_path):
-	cursor_sprite.texture = texture_path
-	if cursor_sprite.texture == null:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+#func update_cursor_texture(texture_path):
+#	cursor_sprite.texture = texture_path
+#	if cursor_sprite.texture == null:
+#		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+#	else:
+#		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 #func disable_input():
 #	get_tree().get_root().set_process_input(false)

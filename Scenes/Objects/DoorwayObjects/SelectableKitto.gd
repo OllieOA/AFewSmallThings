@@ -1,4 +1,4 @@
-extends SelectableItem
+extends TiltableItem
 
 
 func _ready() -> void:

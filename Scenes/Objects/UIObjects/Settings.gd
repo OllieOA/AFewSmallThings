@@ -18,7 +18,7 @@ func _ready() -> void:
 	settings_menu.mouse_filter = 2
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if GameControl.main_input_name == "CancelAction":
 		if music_toggle.get_button_mask() == 1:
 			music_toggle.set_button_mask(2)
@@ -60,8 +60,6 @@ func _on_ToggleMusic_pressed() -> void:
 
 func _on_ToggleMouse_pressed() -> void:
 	menu_clicker.play()
-	var input_mouse_left = InputEventMouseButton.new().set_button_index(1)
-	var input_mouse_right = InputEventMouseButton.new().set_button_index(2)
 	if mouse_flipper.pressed:
 		GameControl.main_input_name = "CancelAction"
 		GameControl.cancel_input_name = "MainAction"

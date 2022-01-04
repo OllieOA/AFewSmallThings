@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Objects/BaseObjects/SelectableItem.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Objects/BaseObjects/TiltableItem.gd" type="Script" id=2]
-
-[sub_resource type="RectangleShape2D" id=1]
+[ext_resource path="res://Assets/Kitto/Kitto_Base.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Kitto/Kitto_Tilt.png" type="Texture" id=4]
 
 [sub_resource type="AudioStreamOGGVorbis" id=2]
 resource_local_to_scene = true
@@ -11,13 +11,15 @@ data = PoolByteArray( 79, 103, 103, 83, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 173, 48, 0
 
 [node name="TiltableItem" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+tilt_sprite = NodePath("TiltableNodes/TiltSprite")
 
-[node name="SelectBox" parent="SelectableNodes/PlacematSprite/SelectArea" index="0"]
-shape = SubResource( 1 )
+[node name="BaseSprite" parent="SelectableNodes" index="2"]
+texture = ExtResource( 3 )
 
-[node name="SelectSound" parent="SelectableNodes" index="2"]
+[node name="SelectSound" parent="SelectableNodes" index="6"]
 stream = SubResource( 2 )
 
 [node name="TiltableNodes" type="Node2D" parent="." index="1"]
 
 [node name="TiltSprite" type="Sprite" parent="TiltableNodes" index="0"]
+texture = ExtResource( 4 )
