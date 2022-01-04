@@ -25,7 +25,7 @@ func _ready() -> void:
 	rng.randomize()
 	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_determine_room_levels()
 	if GameControl.game_started and not events_started:
 		events_started = true
@@ -88,29 +88,6 @@ func main_timeout():
 
 
 func _raise_alert(curr_object):
-#	object_dict[object_name]["random_chance"] = object_dict[object_name]["base_random_chance"]
-#	if object_dict[object_name]["object_decayable"]:
-#		object_dict[object_name]["alert_level"] -= 1
-#	else:
-#		if object_dict[object_name]["alert_level"] == 3:
-#			object_dict[object_name]["alert_level"] = 2
-#	object_dict[object_name]["object_alertable"] = false
-#	emit_signal("random_change", object_name)
-#	if GameControl.current_scene_name == object_dict[object_name]["wall_location"]:
-#		var node_to_extract = "/root/" + object_dict[object_name]["wall_location"] + "/GameObjects/" + object_name
-#		var object_to_check = get_tree().get_root().get_node(node_to_extract)
-#		object_to_check.process_alert(object_dict[object_name]["alert_level"], object_name)
-#	else:
-#		# We are not in the current scene
-#		if object_dict[object_name]["object_decayable"]:
-#			if object_dict[object_name]["alert_level"] == 1:
-#				play_notification_level(1, Vector2(640, 320))
-#			elif object_dict[object_name]["alert_level"] == 2:
-#				play_notification_level(2, Vector2(640, 320))
-#			elif object_dict[object_name]["alert_level"] == 0:
-#				play_notification_level(0, Vector2(640, 320))
-#			alert_cooldown_start(object_name)
-
 	curr_object.random_chance = curr_object.base_random_chance
 	curr_object.alert_level = max(curr_object.alert_level-1, curr_object.object_min_alert_level)
 	

@@ -18,6 +18,8 @@ func _ready() -> void:
 	tiltable = true
 	tilted = false
 	min_alert_level = 2
+	
+	
 
 
 func process_alert(level: int, object_name: String):

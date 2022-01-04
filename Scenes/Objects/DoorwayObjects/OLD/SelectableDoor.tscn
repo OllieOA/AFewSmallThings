@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectableDoor.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/OLD/SelectableDoor.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Door_Base1.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Door_Base2.png" type="Texture" id=3]
 [ext_resource path="res://Sounds/DoorClose.ogg" type="AudioStream" id=4]

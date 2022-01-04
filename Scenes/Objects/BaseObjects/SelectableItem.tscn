@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Objects/BaseObjects/SelectableItem.gd" type="Script" id=1]
 [ext_resource path="res://Sounds/StonePick-01.ogg" type="AudioStream" id=2]
@@ -145,6 +145,9 @@ tracks/2/keys = {
 "values": [ 250, 500 ]
 }
 
+[sub_resource type="ImageTexture" id=10]
+resource_local_to_scene = true
+
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
 extents = Vector2( 28.75, 24 )
@@ -184,6 +187,7 @@ position = Vector2( 129, -140 )
 texture = ExtResource( 4 )
 
 [node name="PlacematSprite" type="Sprite" parent="SelectableNodes"]
+texture = SubResource( 10 )
 
 [node name="SelectArea" type="Area2D" parent="SelectableNodes"]
 

@@ -37,6 +37,7 @@ var my_object_name: String
 var audio_position: Vector2
 var wall_location: String
 var selectable_nodes_position: Vector2
+var global_object
 
 # Handle Sprites
 var cursor_sprite: Texture
@@ -60,18 +61,6 @@ func _ready() -> void:
 	audio_position = _register_object_audio_position()
 	wall_location = _register_wall_location()
 	selectable_nodes_position = root_selectable_nodes.position
-	
-	if not my_object_name in EventManager.object_dict:
-		EventManager.add_object(self)
-	else:
-		var global_object = EventManager.object_dict[my_object_name]
-		process_alert(global_object.alert_level, my_object_name)
-
-
-func process_alert(level: int, object_name: String):
-	# Extended in each inherited class
-	# No functionality intended at this level
-	pass
 
 
 #	=----------=

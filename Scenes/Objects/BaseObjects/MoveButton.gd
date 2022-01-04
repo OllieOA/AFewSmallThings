@@ -6,6 +6,13 @@ var my_direction
 var scene_change_speed
 export (NodePath) onready var bob_animator = get_node(bob_animator) as AnimationPlayer
 
+var left_scene
+var right_scene
+var down_scene
+
+var left_scene_curr_alert
+var right_scene_curr_alert
+var down_scene_curr_alert
 
 var direction_dict = {
 	"Doorway": {
@@ -50,14 +57,14 @@ func _ready() -> void:
 	bob_animator.play("SlowBob")
 
 
-func _process(delta: float) -> void:
-	var left_scene = direction_dict[GameControl.current_scene_name]["Left"]
-	var right_scene = direction_dict[GameControl.current_scene_name]["Right"]
-	var down_scene = direction_dict[GameControl.current_scene_name]["Down"]
+func _process(_delta: float) -> void:
+	left_scene = direction_dict[GameControl.current_scene_name]["Left"]
+	right_scene = direction_dict[GameControl.current_scene_name]["Right"]
+	down_scene = direction_dict[GameControl.current_scene_name]["Down"]
 	
-	var left_scene_curr_alert = EventManager.room_alert_levels[left_scene]
-	var right_scene_curr_alert = EventManager.room_alert_levels[right_scene]
-	var down_scene_curr_alert = EventManager.room_alert_levels[down_scene]
+	left_scene_curr_alert = EventManager.room_alert_levels[left_scene]
+	right_scene_curr_alert = EventManager.room_alert_levels[right_scene]
+	down_scene_curr_alert = EventManager.room_alert_levels[down_scene]
 	
 	if my_direction == "Left":
 		_set_alert_level(left_scene_curr_alert, left_scene)

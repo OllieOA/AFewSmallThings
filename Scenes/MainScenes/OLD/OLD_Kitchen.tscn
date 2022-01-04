@@ -9,7 +9,7 @@
 [ext_resource path="res://Scenes/Objects/UIObjects/MoveButton_Left.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Fonts/MenuTooltips.tres" type="DynamicFont" id=8]
 [ext_resource path="res://Assets/Flame2D/FlameBase.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/MainScenes/OLD_Kitchen.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/MainScenes/OLD/OLD_Kitchen.gd" type="Script" id=10]
 [ext_resource path="res://Assets/UI/UI_NinePatch.png" type="Texture" id=11]
 [ext_resource path="res://Scenes/Objects/KitchenObjects/SelectableWateringCan.tscn" type="PackedScene" id=12]
 

@@ -6,7 +6,7 @@ func _ready() -> void:
 	self.connect("object_selected", self, "_move_select", [my_direction])
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not GameControl.game_started and self.visible:
 		self.hide()
 	elif GameControl.game_started:

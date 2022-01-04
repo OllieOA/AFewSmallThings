@@ -17,7 +17,7 @@ func _ready():
 		placemat_sprite.show()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if GameControl.current_scene_name != wall_location:
 		dropable = false
 	else:

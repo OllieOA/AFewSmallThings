@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/MainScenes/CabinScene.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Flame2D/CeilingCorners.png" type="Texture" id=2]
@@ -42,6 +42,11 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0.0, -10.0, 2.0, -4.0, 13.0, 3.0, -4.0, 2.0, -10.0, -1.0, 8.0, 3.0, 0.0 ]
 }
+
+[sub_resource type="ImageTexture" id=4]
+resource_local_to_scene = true
+
+[sub_resource type="ImageTexture" id=5]
 
 [sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 2
@@ -99,6 +104,7 @@ anims/Randomiser = SubResource( 2 )
 [node name="OutsideSprite" type="Sprite" parent="DefaultNodes/Sprites"]
 light_mask = 16
 z_index = -1
+texture = SubResource( 4 )
 centered = false
 
 [node name="BaseSprite" type="Sprite" parent="DefaultNodes/Sprites"]
@@ -106,6 +112,7 @@ texture = ExtResource( 5 )
 centered = false
 
 [node name="DetailsSprite" type="Sprite" parent="DefaultNodes/Sprites"]
+texture = SubResource( 5 )
 
 [node name="SnowBackground" type="Particles2D" parent="DefaultNodes/Sprites"]
 light_mask = 16

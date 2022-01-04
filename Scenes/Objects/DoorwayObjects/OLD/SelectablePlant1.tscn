@@ -1,21 +1,19 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectableLitter.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Kitto/Kitto_Poop_Tilt.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Kitto/Kitto_Poop_Base.png" type="Texture" id=3]
-[ext_resource path="res://Sounds/KittoPoop.ogg" type="AudioStream" id=4]
-[ext_resource path="res://Assets/Kitto/Kitto_Poop_AlertLevel2.png" type="Texture" id=5]
-[ext_resource path="res://Sounds/WindowOpening.ogg" type="AudioStream" id=6]
-[ext_resource path="res://Assets/Kitto/Kitto_Poop_Outline.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/OLD/SelectablePlant1.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Doorway/DoorwayRoom_Plant1_Base.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Doorway/DoorwayRoom_Plant1_Outline.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/PlantDeath.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Doorway/DoorwayRoom_Plant1_AlertLevel1.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 29.0176
 height = 60.9188
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 141.125, 59.625 )
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 34, 22 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=10]
 resource_name = "BlinkState1"
 length = 0.6
 loop = true
@@ -44,7 +42,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=11]
 resource_name = "BlinkState2"
 loop = true
 tracks/0/type = "value"
@@ -72,11 +70,35 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
 }
 
-[node name="SelectableLitter" type="Node2D"]
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 120, 48 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 120, 0, 120, 48 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
+region = Rect2( 240, 0, 120, 48 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 4 )
+region = Rect2( 360, 0, 120, 48 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="SelectablePlant1" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Base" type="Sprite" parent="."]
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 centered = false
 
 [node name="Placemat" type="Sprite" parent="."]
@@ -90,10 +112,9 @@ centered = false
 [node name="DeliveryPromptAnimation" type="AnimationPlayer" parent="DeliveryPlacemat"]
 
 [node name="DecaySprite" type="Sprite" parent="."]
+centered = false
 
 [node name="TiltSprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
-centered = false
 
 [node name="DeliveryArea" type="Area2D" parent="."]
 position = Vector2( 277, 675 )
@@ -104,37 +125,39 @@ rotation = 1.69781
 shape = SubResource( 4 )
 
 [node name="SelectArea" type="Area2D" parent="."]
-position = Vector2( 305, 317 )
+position = Vector2( 277, 675 )
 
 [node name="SelectionShape" type="CollisionShape2D" parent="SelectArea"]
-position = Vector2( -112.125, -198.625 )
-shape = SubResource( 5 )
+position = Vector2( -201, -599 )
+shape = SubResource( 12 )
 
 [node name="OutlineAlert" type="Sprite" parent="."]
-modulate = Color( 0.870588, 0.588235, 0.054902, 1 )
-position = Vector2( 200, 120 )
+modulate = Color( 0.815686, 0.121569, 0.121569, 1 )
+position = Vector2( 80, 80 )
 texture = ExtResource( 5 )
 
 [node name="OutlineAlertAnimation" type="AnimationPlayer" parent="OutlineAlert"]
-anims/BlinkState1 = SubResource( 6 )
-anims/BlinkState2 = SubResource( 7 )
+anims/BlinkState1 = SubResource( 10 )
+anims/BlinkState2 = SubResource( 11 )
 
 [node name="OutlineSelection" type="Sprite" parent="."]
-visible = false
 modulate = Color( 0.827451, 0.870588, 0.054902, 1 )
-texture = ExtResource( 7 )
+texture = ExtResource( 3 )
 centered = false
+
+[node name="FliesSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 77, 44 )
+frames = SubResource( 9 )
+playing = true
 
 [node name="Cursor" type="Sprite" parent="."]
 z_index = 10
 
 [node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 4 )
 max_distance = 3000.0
 bus = "SFX"
 
 [node name="DropSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 6 )
 max_distance = 3000.0
 bus = "SFX"
 

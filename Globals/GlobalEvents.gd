@@ -27,7 +27,7 @@ func _ready() -> void:
 	wind_noise.stream_paused = true
 	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if start_wind and not start_wind_latch:
 		start_wind_latch = true
 		end_wind = false

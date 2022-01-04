@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Scenes/Objects/DoorwayObjects/SelectablePlant2.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/OLD/SelectablePlant2.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Plant2_Outline.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Plant2_Base.png" type="Texture" id=3]
 [ext_resource path="res://Assets/UI/PlantDeath.png" type="Texture" id=4]
