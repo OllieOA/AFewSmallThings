@@ -23,6 +23,7 @@ var cancel_input_name : String
 
 # Set up a cursor inventory
 var cursor_inventory
+enum POSS_INVENTS {Empty, PickableWateringCan, PickableBroom, ExtractableLogs}
 
 func _ready() -> void:
 	game_started = true # TEST
@@ -36,7 +37,7 @@ func _ready() -> void:
 	current_scene = root.get_child(root.get_child_count() - 1)
 	animation_player.play_backwards("Fade")
 	
-	cursor_inventory = null
+	cursor_inventory = POSS_INVENTS.Empty
 
 # Scene management
 func _process(_delta: float) -> void:

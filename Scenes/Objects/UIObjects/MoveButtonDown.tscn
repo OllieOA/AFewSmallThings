@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Objects/BaseObjects/MoveButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Objects/UIObjects/MoveButtonDown.gd" type="Script" id=2]
@@ -92,13 +92,16 @@ void fragment()
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
 shader = SubResource( 2 )
-shader_param/intensity = 250
+shader_param/intensity = 200
 shader_param/precision = 0.02
 shader_param/flipColors = false
 shader_param/outline_color = Color( 0.921569, 0.0941176, 0.0941176, 1 )
 shader_param/outline_color_2 = Color( 0.921569, 0.0941176, 0.0941176, 1 )
 shader_param/use_outline_uv = false
 shader_param/useTexture = false
+
+[sub_resource type="ImageTexture" id=5]
+resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 73, 27 )
@@ -116,6 +119,9 @@ texture = ExtResource( 3 )
 
 [node name="AlertSprite" parent="SelectableNodes" index="3"]
 position = Vector2( 87, -57 )
+
+[node name="PlacematSprite" parent="SelectableNodes" index="4"]
+texture = SubResource( 5 )
 
 [node name="SelectBox" parent="SelectableNodes/SelectArea" index="0"]
 position = Vector2( 0, 0 )

@@ -114,7 +114,7 @@ func _on_SelectArea_input_event(viewport: Node, event: InputEvent, shape_idx: in
 	if event.is_action_pressed(GameControl.main_input_name):
 		if fallen:
 			if GameControl.cursor_inventory == null:
-				_pick_fallen(alert_level)
+				_pick_fallen(EventManager.object_dict[my_object_name])
 			else:
 				GlobalEvents.play_negative_click()
 				# Tooltip saying to empty cursor

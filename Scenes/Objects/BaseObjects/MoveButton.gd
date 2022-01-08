@@ -67,25 +67,19 @@ func _process(_delta: float) -> void:
 	down_scene_curr_alert = EventManager.room_alert_levels[down_scene]
 	
 	if my_direction == "Left":
-		_set_alert_level(left_scene_curr_alert, left_scene)
+		_set_arrow_alert_level(left_scene_curr_alert, left_scene)
 	if my_direction == "Right":
-		_set_alert_level(right_scene_curr_alert, right_scene)
+		_set_arrow_alert_level(right_scene_curr_alert, right_scene)
 	if my_direction == "Down":
-		_set_alert_level(down_scene_curr_alert, down_scene)
+		_set_arrow_alert_level(down_scene_curr_alert, down_scene)
 		
 
-func _set_alert_level(level, area):
-	if level == 1 and local_area_values[area] != 1:
-		alert_animator.play("BlinkState1")
-		local_area_values[area] = 1
-		
-	if level == 2 and local_area_values[area] != 2:
-		alert_animator.play("BlinkState2")
-		local_area_values[area] = 2
-		
-	if level == 3 and local_area_values[area] != 3:
+func _set_arrow_alert_level(level, area):
+	if level in range(1, 3):
+		_set_alert(level, outline_shader_animator)
+		local_area_values[area] = level
+	elif level == 3:
 		alert_sprite.hide()
-		local_area_values[area] = 3
 
 
 func _move_select(direction):

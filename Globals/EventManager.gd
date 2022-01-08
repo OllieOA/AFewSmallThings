@@ -41,7 +41,7 @@ func _start_events():
 	main_timer.start()
 
 
-func add_object(object):
+func add_object(object) -> void:
 	if object is FallableItem \
 			or object is DecayableItem \
 			or object is TiltableItem:
@@ -57,9 +57,13 @@ func add_object(object):
 		new_data_object.object_alertable = true
 		new_data_object.object_active = true
 		new_data_object.object_position = object.get_global_position()
-		new_data_object.object_min_alert_level = object.alert_level
+		new_data_object.object_min_alert_level = object.min_alert_level
 
 		object_dict[curr_object_name] = new_data_object
+
+
+func remove_alert(object_name: String) -> void:
+	object_dict[object_name].alert_level = 3
 
 
 func main_timeout():
@@ -81,6 +85,7 @@ func main_timeout():
 					and curr_data_object.alert_level > curr_data_object.object_min_alert_level:
 				random_event = true
 				_raise_alert(curr_data_object)
+				print("DEBUG: ALERTING:: ", curr_data_object.object_name, "::", curr_data_object.alert_level)
 			else:
 				curr_data_object.random_chance += 1
 		else:
@@ -90,13 +95,11 @@ func main_timeout():
 func _raise_alert(curr_object):
 	curr_object.random_chance = curr_object.base_random_chance
 	curr_object.alert_level = max(curr_object.alert_level-1, curr_object.object_min_alert_level)
-	
-	curr_object.object_alertable = false
-	emit_signal("random_change", curr_object)
 	alert_cooldown_start(curr_object)
+	emit_signal("random_change", curr_object)
 	
 	if GameControl.current_scene_name == curr_object.wall_location:
-		var node_to_extract = "/root/" + curr_object.wall_location + "/GameObjects/" + curr_object.object_name
+		var node_to_extract = "/root/" + curr_object.wall_location + "/SceneObjects/" + curr_object.object_name
 		var object_to_check = get_tree().get_root().get_node(node_to_extract)
 		play_notification_level(curr_object.alert_level, curr_object.object_position)
 		object_to_check.process_alert(curr_object.alert_level, curr_object.object_name)
@@ -118,13 +121,14 @@ func play_notification_level(level, position_to_set):
 		kill_sound.position = position_to_set
 		kill_sound.play()
 		yield(kill_sound, "finished")
-		
+
 
 func alert_cooldown_start(object):
+	object.object_alertable = false
 	var alert_cooldown = Timer.new()
 	add_child(alert_cooldown)
 	alert_cooldown.one_shot = true
-	alert_cooldown.wait_time = 10.0
+	alert_cooldown.wait_time = GameProgression.alert_cooldown_time
 	alert_cooldown.connect("timeout", self, "_alert_cooldown_timeout", [object.object_name])
 	alert_cooldown.start()
 

@@ -26,7 +26,7 @@ func pick() -> void:
 	placemat_sprite.show()
 	
 	# Handle inventory
-	GameControl.cursor_inventory = self.get_name()
+	GameControl.cursor_inventory = my_object_name
 	picked = true
 
 

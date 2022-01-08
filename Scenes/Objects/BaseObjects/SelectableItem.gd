@@ -2,6 +2,8 @@ extends Node2D
 class_name SelectableItem
 
 signal object_selected
+signal show_mouseover
+signal stop_mouseover
 
 # Nodes
 export(NodePath) onready var root_selectable_nodes = get_node(root_selectable_nodes) as Node2D
@@ -14,8 +16,8 @@ export(NodePath) onready var outline_shader_animator = get_node(outline_shader_a
 export(NodePath) onready var alert_animator = get_node(alert_animator) as AnimationPlayer
 
 # Textures
-export(Texture) onready var alert_level1_texture = load(str(alert_level1_texture)) as Texture
-export(Texture) onready var alert_level2_texture = load(str(alert_level2_texture)) as Texture
+var alert_level1_texture = preload("res://Assets/UI/AlertLevel1.png")
+var alert_level2_texture = preload("res://Assets/UI/AlertLevel2.png")
 
 var alert_texture_dict = {
 	1: alert_level1_texture,
@@ -28,8 +30,7 @@ var alertable: bool
 var alerting: bool
 
 # Handle alerts
-var alert_level: int
-var min_alert_level: int
+export (int) var min_alert_level
 var base_random_chance: int
 
 # Handle metas
@@ -42,6 +43,7 @@ var global_object
 # Handle Sprites
 var cursor_sprite: Texture
 var alert_sprites: Dictionary
+var active_outline_sprite: Sprite
 
 
 func _ready() -> void:
@@ -49,12 +51,11 @@ func _ready() -> void:
 	selectable = false
 	alertable = false
 	alerting = false
-
-	# Sprites
-	alert_sprites = {1: alert_level1_texture, 2: alert_level2_texture}
+	base_random_chance = 20
 
 	# Outline
-	_show_outline(false)
+	_hide_outline(base_sprite)
+	_hide_outline(active_outline_sprite)
 
 	# Metas
 	my_object_name = _register_object_name()
@@ -71,7 +72,7 @@ func _on_SelectArea_mouse_entered() -> void:
 		if alerting:
 			outline_shader_animator.stop()
 		# Set shader params
-		_show_outline(true)
+		_show_outline(base_sprite)
 
 
 func _on_SelectArea_mouse_exited() -> void:
@@ -80,7 +81,7 @@ func _on_SelectArea_mouse_exited() -> void:
 		outline_shader_animator.play()
 		outline_shader_animator.seek(curr_alert_time)
 	else:
-		_show_outline(false)
+		_hide_outline(base_sprite)
 
 
 func _on_SelectArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
@@ -89,38 +90,46 @@ func _on_SelectArea_input_event(viewport: Node, event: InputEvent, shape_idx: in
 			emit_signal("object_selected")
 
 
-func _show_outline(show: bool):
-	if show:
-		base_sprite.material.set_shader_param("intensity", 300)
-		base_sprite.material.set_shader_param("outline_color", Color("dddd28"))
-		base_sprite.material.set_shader_param("outline_color_2", Color("dddd28"))
-	else:
-		base_sprite.material.set_shader_param("intensity", 0)
+func _show_outline(sprite):
+	if not sprite == null:
+		sprite.material.set_shader_param("intensity", 300)
+		sprite.material.set_shader_param("outline_color", Color("dddd28"))
+		sprite.material.set_shader_param("outline_color_2", Color("dddd28"))
 
+
+func _hide_outline(sprite):
+	if not sprite == null:
+		sprite.material.set_shader_param("intensity", 0)
+	
 
 #	=----------=
 #	Handle alerting
 # 	=----------=
-func _set_alert(level) -> void:
-	if level == 3 or level == 0:
-		_show_outline(false)
-		alert_sprite.hide()
-	elif level in range(1, 3):
-		var anim_to_play = "BlinkState" + str(level)
-		var alert_texture_to_show = alert_texture_dict[level]
+func _play_alert_outline(anim_to_play: String, node: Sprite) -> void:
+	pass
 
-		if not alert_sprite.visbile:
+
+func _set_alert(level, node=outline_shader_animator) -> void:
+	if level == 3 or level == 0:
+		_hide_outline(base_sprite)
+		_hide_outline(active_outline_sprite)
+		alert_sprite.hide()
+		
+	elif level in range(1, 3):
+		_show_outline(active_outline_sprite)
+		var anim_to_play = "BlinkState" + str(level)
+		alert_sprite.set_texture(alert_texture_dict[level])
+		
+		if not alert_sprite.visible:
 			alert_sprite.show()
-			
+		
 		alert_animator.play(anim_to_play)
-		outline_shader_animator.play(anim_to_play)
+		node.play(anim_to_play)
 
 
 func _remove_alert(object_name) -> void:
-	alert_level = 3
-	var curr_data_object = EventManager.object_dict[object_name]
-	curr_data_object.alert_level = alert_level
-	curr_data_object.random_chance = curr_data_object.base_random_chance
+	EventManager.remove_alert(object_name)
+	_set_alert(3)
 
 
 #	=----------=
@@ -135,4 +144,6 @@ func _register_object_audio_position() -> Vector2:
 
 
 func _register_wall_location() -> String:
-	return get_tree().get_root().get_name()
+	var curr_root = get_tree().get_root()
+	var curr_scene_name = curr_root.get_child(curr_root.get_child_count() - 1).get_name()
+	return curr_scene_name

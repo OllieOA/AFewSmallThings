@@ -12,11 +12,5 @@ var my_scene_name: String
 func _ready() -> void:
 	my_scene_name = self.get_name()
 	GameControl.current_scene_name = my_scene_name
-#	print("DEBUG: MY SCENE NAME ", my_scene_name)
 	base_fire_randomiser.play("Randomiser")
 	activity_fire_randomiser.play("Randomiser")
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
