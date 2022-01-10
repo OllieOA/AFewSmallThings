@@ -23,7 +23,7 @@ var cancel_input_name : String
 
 # Set up a cursor inventory
 var cursor_inventory
-enum POSS_INVENTS {Empty, PickableWateringCan, PickableBroom, ExtractableLogs}
+enum POSS_INVENTS {Empty, PickableWateringCan, PickableBroom, ExtractableLogs, ExtractableFood}
 
 func _ready() -> void:
 	game_started = true # TEST

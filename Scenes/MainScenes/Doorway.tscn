@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/MainScenes/CabinScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Doorway/DoorwayRoom_Outside.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://Scenes/Objects/DoorwayObjects/DecayablePlant2.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Objects/DoorwayObjects/DecayablePlant1.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Objects/DoorwayObjects/DecayableLitter.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/DecayableFood.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/DecayableDoorSnow.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Objects/DoorwayObjects/DecayableWindowSnow1.tscn" type="PackedScene" id=11]
 
 [node name="Doorway" instance=ExtResource( 1 )]
 
@@ -19,55 +22,24 @@ texture = ExtResource( 3 )
 
 [node name="DecayablePlant1" parent="SceneObjects" index="0" instance=ExtResource( 7 )]
 position = Vector2( 165, 298 )
-root_selectable_nodes = NodePath("SelectableNodes")
-base_sprite = NodePath("SelectableNodes/BaseSprite")
-alert_sprite = NodePath("SelectableNodes/AlertSprite")
-placemat_sprite = NodePath("SelectableNodes/PlacematSprite")
-selection_area = NodePath("SelectableNodes/SelectArea")
-selection_sound = NodePath("SelectableNodes/SelectSound")
-outline_shader_animator = NodePath("SelectableNodes/OutlineAnimator")
-alert_animator = NodePath("SelectableNodes/AlertAnimator")
 
 [node name="DecayablePlant2" parent="SceneObjects" index="1" instance=ExtResource( 6 )]
 position = Vector2( 278, 298 )
-root_selectable_nodes = NodePath("SelectableNodes")
-base_sprite = NodePath("SelectableNodes/BaseSprite")
-alert_sprite = NodePath("SelectableNodes/AlertSprite")
-placemat_sprite = NodePath("SelectableNodes/PlacematSprite")
-selection_area = NodePath("SelectableNodes/SelectArea")
-selection_sound = NodePath("SelectableNodes/SelectSound")
-outline_shader_animator = NodePath("SelectableNodes/OutlineAnimator")
-alert_animator = NodePath("SelectableNodes/AlertAnimator")
 
 [node name="TiltableDoor" parent="SceneObjects" index="2" instance=ExtResource( 5 )]
 position = Vector2( 766, 388 )
-root_selectable_nodes = NodePath("SelectableNodes")
-base_sprite = NodePath("SelectableNodes/BaseSprite")
-alert_sprite = NodePath("SelectableNodes/AlertSprite")
-placemat_sprite = NodePath("SelectableNodes/PlacematSprite")
-selection_area = NodePath("SelectableNodes/SelectArea")
-selection_sound = NodePath("SelectableNodes/SelectSound")
-outline_shader_animator = NodePath("SelectableNodes/OutlineAnimator")
-alert_animator = NodePath("SelectableNodes/AlertAnimator")
 
 [node name="TiltableWindow1" parent="SceneObjects" index="3" instance=ExtResource( 4 )]
 position = Vector2( 1062, 299 )
-root_selectable_nodes = NodePath("SelectableNodes")
-base_sprite = NodePath("SelectableNodes/BaseSprite")
-alert_sprite = NodePath("SelectableNodes/AlertSprite")
-placemat_sprite = NodePath("SelectableNodes/PlacematSprite")
-selection_area = NodePath("SelectableNodes/SelectArea")
-selection_sound = NodePath("SelectableNodes/SelectSound")
-outline_shader_animator = NodePath("SelectableNodes/OutlineAnimator")
-alert_animator = NodePath("SelectableNodes/AlertAnimator")
 
 [node name="DecayableLitter" parent="SceneObjects" index="4" instance=ExtResource( 8 )]
 position = Vector2( 203, 630 )
-root_selectable_nodes = NodePath("SelectableNodes")
-base_sprite = NodePath("SelectableNodes/BaseSprite")
-alert_sprite = NodePath("SelectableNodes/AlertSprite")
-placemat_sprite = NodePath("SelectableNodes/PlacematSprite")
-selection_area = NodePath("SelectableNodes/SelectArea")
-selection_sound = NodePath("SelectableNodes/SelectSound")
-outline_shader_animator = NodePath("SelectableNodes/OutlineAnimator")
-alert_animator = NodePath("SelectableNodes/AlertAnimator")
+
+[node name="DecayableFood" parent="SceneObjects" index="5" instance=ExtResource( 9 )]
+position = Vector2( 416, 662 )
+
+[node name="DecayableDoorSnow" parent="SceneObjects" index="6" instance=ExtResource( 10 )]
+position = Vector2( 780, 671 )
+
+[node name="DecayableWindowSnow1" parent="SceneObjects" index="7" instance=ExtResource( 11 )]
+position = Vector2( 917, 678 )

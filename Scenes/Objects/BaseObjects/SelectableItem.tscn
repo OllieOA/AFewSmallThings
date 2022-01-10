@@ -180,6 +180,7 @@ texture = ExtResource( 3 )
 
 [node name="AlertSprite" type="Sprite" parent="SelectableNodes"]
 modulate = Color( 0.921569, 0.0941176, 0.0941176, 1 )
+light_mask = 0
 position = Vector2( 129, -140 )
 texture = ExtResource( 4 )
 
